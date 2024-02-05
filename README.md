@@ -1,21 +1,60 @@
 # react-markdown-template
+This a customized implementation of markdown renderer utilizing remark plugins, rehype plugins and pyodide in react framework.
+
+
+
 
 # Purpose of this template
 
+I was planning to build my own wiki page that hosts privately. My goal was to have sort of Python code blocks and render the output under the code block. There are several approaches including but not limited to building a HEXO plugin to render the output or building a customized react app that I can have full control of the design.
+
+To extend the idea of rendering markdown files in React which may be useful in some cases in general while no existing template is available for this, this project has been produced.
+
+This project was built on Vite and Reactjs. The page was decorated with Tailwind CSS and Daisyui.
+
+# Live Demo
+The under-developing demo is hosted on Google Firebase and can be accessed here [https://siraisinotes-demo.web.app/test](https://siraisinotes-demo.web.app/test)
+
 # Supported features
+
+- ✅ Dark theme, Light theme and follow OS theme switch
+- ✅ Read markdown files
+- ✅ Render markdown (see the render results)
+
+<br>
+
+- ⚠️ Python code block (Pyodide) 
+
+<br>
+
+- 🚧 Modularise markdown test page into react components
+  - 🚧 Markdown renderer
+  - 🚧 Theme switch in the navigation bar
+- 🚧 Generate page depending on markdown file name
+
+
+<br>
+
+- 💭 Enhance code block render (Render once and add corresponding CSS)
+- 💭 Upgrade Mermaid plugin
+- 💭 Image processing using Sharp js
+
+
+legend: 
+| ✅ | ⚠️ | 🚧 |💭|
+|:---:|:---:|:---:|:---:|
+| Done  | Buggy  |  Working on | Brief Idea |
 
 # Render results
 
 <details>
   <summary>Contents (table of content)</summary>
     <img src="./README_img/contents.png" width="100%"/>
-
 </details>
 
 <details>
   <summary>Github style collapse</summary>
     <img src="./README_img/githubstyle%20collapse.png" width="100%"/>
-
 </details>
 
 <details>
@@ -106,30 +145,47 @@
 
 # Limitations (Known bugs)
 
--   when there are too many code blocks being reloaded, it will cause not enough memory issues.
--   when the theme changes, the markdown gonna re-render and causes the code block to reload
-    ==> possible solution is to try to use stack ==> continuous push result to use sate or so
+## Python code block (Pyodide)
+-   When there are too many code blocks being reloaded, it will cause not enough memory issues in Google Chrome.
+-   When the theme changes, the markdown gonna re-renders and causes the code block to reload
+    - possible solution is to try to use stack and continuous push result to useState or so
+- Enable code block Python render in `test.`jsx` by uncommenting the corresponding section
+
 
 # Usage
+## Build local server
 
-Explain how to use your project, including examples and code snippets.
+```sh
+git clone https://github.com/siraisisatoru/react-markdown-template.git
+cd react-markdown-template
+npm i
+npm run dev
+```
+Access the demo via link [http://localhost:5173/test](http://localhost:5173/test)
+
+
+## Deploy to Firebase
+
+```sh
+firebase login
+npm install -g firebase-tools
+firebase init
+>? Which Firebase features do you want to set up for this directory? Press Space to select
+features, then Enter to confirm your choices. Hosting: Configure files for Firebase Hosting and
+(optionally) set up GitHub Action deploys
+>? Please select an option: Use an existing project
+>? Select a default Firebase project for this directory: <YOUR PROJECT> (<YOUR PROJECT>)
+>? What do you want to use as your public directory? dist
+>? Configure as a single-page app (rewrite all urls to /index.html)? No
+>? Set up automatic builds and deploys with GitHub? No
+>? File dist/index.html already exists. Overwrite? No
+```
+
 
 # Contributing
 
-Provide guidelines for others who want to contribute to your project. Include information on how to submit issues or pull requests.
+Any new ideas want to add to the project are welcome. Please submit a pull request or open up an issue and we can discuss further.
 
 # License
 
 This project is licensed under the MIT License.
-
-# TODO:
-
--> modularise test.jsx to
--> markdown render
--> nav bar with theme switch
--> index.jsx
--> login.jsx
--> markdown display
--> generate page depending on markdown file name
-
-# know bugs
