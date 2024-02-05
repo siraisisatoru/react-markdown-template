@@ -8,98 +8,100 @@
 
 <details>
   <summary>Contents (table of content)</summary>
-  ![](./README_img/contents.png?raw=true)
+    <img src="./README_img/contents.png" width="100%"/>
+
 </details>
 
 <details>
   <summary>Github style collapse</summary>
-    ![](./README_img/githubstyle%20collapse.png?raw=true)
+    <img src="./README_img/githubstyle%20collapse.png" width="100%"/>
+
 </details>
 
 <details>
   <summary>Long text render sample</summary>
-  ![](./README_img/long%20text%20render.png?raw=true)
+      <img src="./README_img/long%20text%20render.png" width="100%"/>
 </details>
 
 <details>
   <summary>Horizonal rules</summary>
-    ![](./README_img/horizontal%20rules.png?raw=true)
+      <img src="./README_img/horizontal%20rules.png" width="100%"/>
 </details>
 
 <details>
   <summary>Emphasis</summary>
-    ![](./README_img/emphasis.png?raw=true)
+      <img src="./README_img/emphasis.png" width="100%"/>
 </details>
 
 <details>
   <summary>Blockquotes</summary>
-    ![](./README_img/blockquotes.png?raw=true)
+      <img src="./README_img/blockquotes.png" width="100%"/>
 </details>
 
 <details>
   <summary>Lists</summary>
-    ![](./README_img/lists.png?raw=true)
+      <img src="./README_img/lists.png" width="100%"/>
 </details>
 
 <details>
   <summary>Code blocks</summary>
-    ![](./README_img/code.png?raw=true)
+      <img src="./README_img/code.png" width="100%"/>
 </details>
 
 <details>
   <summary>Tables</summary>
-    ![](./README_img/table.png?raw=true)
+      <img src="./README_img/table.png" width="100%"/>
 </details>
 
 <details>
   <summary>Links</summary>
-    ![](./README_img/links.png?raw=true)
+      <img src="./README_img/links.png" width="100%"/>
 </details>
 
 <details>
   <summary>Images</summary>
-    ![](./README_img/images.png?raw=true)
+      <img src="./README_img/images.png" width="100%"/>
 </details>
 
 <details>
   <summary>Plugins (emojies, emphasis, subscript and superscript, ins and mark)</summary>
-    ![](./README_img/plugin-emojies-emphasis-sub_sup-ins-mark.png?raw=true)
+      <img src="./README_img/plugin-emojies-emphasis-sub_sup-ins-mark.png" width="100%"/>
 </details>
 
 <details>
   <summary>Footnotes</summary>
-    ![](./README_img/footnotes.png?raw=true)
+      <img src="./README_img/footnotes.png" width="100%"/>
 </details>
 
 <details>
   <summary>Definition lists</summary>
-    ![](./README_img/definition%20lists.png?raw=true)
+      <img src="./README_img/definition%20lists.png" width="100%"/>
 </details>
 
 <details>
   <summary>Custom containers</summary>
-    ![](./README_img/container1.png?raw=true)
-    ![](./README_img/container2.png?raw=true)
+    <img src="./README_img/container1.png" width="100%"/>
+    <img src="./README_img/container2.png" width="100%"/>
 </details>
 
 <details>
   <summary>Python wrap</summary>
-    ![](./README_img/python%20wrap.png?raw=true)
+      <img src="./README_img/python%20wrap.png" width="100%"/>
 </details>
 
 <!-- <details>
   <summary>Python Pyodide</summary>
-    ![](./README_img/ .png?raw=true)
+      <img src="./README_img/ .png" width="100%"/>
 </details> -->
 
 <details>
   <summary>Mermaid</summary>
-    ![](./README_img/mermaid1.png.png?raw=true)
-    ![](./README_img/mermaid2.png.png?raw=true)
+      <img src="./README_img/mermaid1.png" width="100%"/>
+      <img src="./README_img/mermaid2.png" width="100%"/>
 </details>
 <details>
   <summary>GitHub flavored markdown (GFM) and HTML</summary>
-    ![](./README_img/GFM%20and%20inline%20html.png?raw=true)
+      <img src="./README_img/GFM%20and%20inline%20html.png" width="100%"/>
 </details>
 
 # Limitations (Known bugs)
