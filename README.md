@@ -20,16 +20,18 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - ✅ Dark theme, Light theme and follow OS theme switch
 - ✅ Read markdown files
 - ✅ Render markdown (see the render results)
+- ✅ Modularise markdown test page into react components
+  - ✅ Markdown renderer
+  - ✅ Theme switch in the navigation bar
 
+  
 <br>
 
 - ⚠️ Python code block (Pyodide) 
 
 <br>
 
-- 🚧 Modularise markdown test page into react components
-  - 🚧 Markdown renderer
-  - 🚧 Theme switch in the navigation bar
+
 - 🚧 Generate page depending on markdown file name
 
 
@@ -149,7 +151,9 @@ legend:
 -   When there are too many code blocks being reloaded, it will cause not enough memory issues in Google Chrome.
 -   When the theme changes, the markdown gonna re-renders and causes the code block to reload
     - possible solution is to try to use stack and continuous push result to useState or so
-- Enable code block Python render in `test.`jsx` by uncommenting the corresponding section
+    - create universal code wrap and create sub-functions for that code block
+      - store pyodide as reference (useRef) and pass to the renderer (constantly import lib)
+- Enable code block Python render in `test.jsx` by uncommenting the corresponding section
 
 
 # Usage
