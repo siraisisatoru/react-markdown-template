@@ -1,7 +1,6 @@
 // components/MarkdownRender.js
-import React, { Component, useState, useEffect, useCallback } from "react";
+import React, { Component, useState, useEffect, useCallback, useRef } from "react";
 import { UseTheme } from "./themeContext";
-
 
 // MARKDOWN ===============================================
 import ReactMarkdown from "react-markdown";
@@ -36,9 +35,9 @@ import { vscDarkPlus, coldarkCold } from "react-syntax-highlighter/dist/cjs/styl
 // SYNTAXHIGHLIGHTER ======================================
 
 // PYTHON =================================================
-// import { usePython, PythonProvider } from "react-py";
-// import { loadPyodide } from "/node_modules/pyodide/pyodide.mjs";
 import Codeblock from "./../utils/codeblock";
+import * as Comlink from "comlink/dist/esm/comlink";
+import { useAsync } from "react-use";
 // PYTHON =================================================
 
 // UILT  ==================================================
@@ -119,6 +118,16 @@ const MarkdownRender = (renderProps) => {
         };
     }
     const { isDarkTheme, setDarkTheme } = UseTheme();
+
+
+    const pyodideRef = useRef(null); // Ref to store the Comlink instance
+    const { loading } = useAsync(async () => {
+        // const worker = new Worker();
+        const worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' })
+        let pyodideWorker = await Comlink.wrap(worker);
+        await pyodideWorker.init();
+        pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
+    }, []);
 
     return (
         <>
@@ -221,7 +230,6 @@ const MarkdownRender = (renderProps) => {
                                     ""
                                 );
                                 const libList = node.children[0].properties?.dataMeta;
-                                // const result = node.children[0].properties?.dataMeta?.match(/^(run\b.*)$/i) ? Codeblock({ code: codeChunk }):"";
 
                                 return (
                                     <>
@@ -310,17 +318,21 @@ const MarkdownRender = (renderProps) => {
                                             /^(run\b.*)$/i
                                         ) ? (
                                             <>
-                                                {/* the code in this code block is python, try to render the output for it */}
-                                                {/* uncomment the following to enable in-page python execution */}
-                                                {/* <pre className="not-prose">
-                                                    <Codeblock
-                                                        code={codeChunk}
-                                                        libList={node.children[0].properties.dataMeta
-                                                            .split(" ")
-                                                            .slice(1)}
-                                                    />
-                                                </pre> */}
-                                            </>
+                                            {/* the code in this code block is python, try to render the output for it */}
+                                            <pre className="not-prose">
+                                                {loading ? (
+                                                    <p>Loading Pyodide...</p>
+                                                ) : (
+                                                    <div>
+                                                        <Codeblock
+                                                            pyodide={pyodideRef.current}
+                                                            code={codeChunk}
+                                                            libListStr={libList}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </pre>
+                                        </>
                                         ) : (
                                             <>
                                                 <span>{node.children[0].properties?.dataMeta}</span>

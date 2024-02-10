@@ -26,6 +26,9 @@ export default defineConfig(({ command, mode }) => {
         build: {
             chunkSizeWarningLimit: 50000,
         },
+        worker: {
+            format: "es",
+        },
         define: {
             BUILD_TIMESTAMP: JSON.stringify(currentDate),
         },

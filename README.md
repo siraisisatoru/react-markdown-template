@@ -23,17 +23,21 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - ✅ Modularise markdown test page into react components
   - ✅ Markdown renderer
   - ✅ Theme switch in the navigation bar
+- ✅ Python code block (Pyodide) 
 
-  
-<br>
-
-- ⚠️ Python code block (Pyodide) 
+<!-- <br> -->
+<!-- - ⚠️  -->
 
 <br>
 
 
 - 🚧 Generate page depending on markdown file name
-
+- 🚧 General Pages components
+  - 🚧 Nav_bar
+  - 🚧 Footer
+  - 🚧 Tool manual
+  - 🚧 Markdown page 
+  - 🚧 Frontpage
 
 <br>
 
@@ -144,16 +148,6 @@ legend:
   <summary>GitHub flavored markdown (GFM) and HTML</summary>
       <img src="./README_img/GFM%20and%20inline%20html.png" width="100%"/>
 </details>
-
-# Limitations (Known bugs)
-
-## Python code block (Pyodide)
--   When there are too many code blocks being reloaded, it will cause not enough memory issues in Google Chrome.
--   When the theme changes, the markdown gonna re-renders and causes the code block to reload
-    - possible solution is to try to use stack and continuous push result to useState or so
-    - create universal code wrap and create sub-functions for that code block
-      - store pyodide as reference (useRef) and pass to the renderer (constantly import lib)
-- Enable code block Python render in `test.jsx` by uncommenting the corresponding section
 
 
 # Usage
