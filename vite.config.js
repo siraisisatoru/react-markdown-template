@@ -29,6 +29,11 @@ export default defineConfig(({ command, mode }) => {
         worker: {
             format: "es",
         },
+        resolve: {
+            alias: {
+                "node-fetch": "isomorphic-fetch",
+            },
+        },
         define: {
             BUILD_TIMESTAMP: JSON.stringify(currentDate),
         },

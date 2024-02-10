@@ -14,6 +14,7 @@
     "comlink": "^4.4.1",
     "daisyui": "^4.6.1",
     "hastscript": "^9.0.0",
+    "isomorphic-fetch": "^3.0.0",
     "pyodide": "^0.25.0",
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
