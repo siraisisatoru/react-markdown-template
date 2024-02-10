@@ -123,7 +123,7 @@ const MarkdownRender = (renderProps) => {
     const pyodideRef = useRef(null); // Ref to store the Comlink instance
     const { loading } = useAsync(async () => {
         // const worker = new Worker();
-        const worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' })
+        const worker = new Worker(new URL('./js/worker.js', import.meta.url), { type: 'module' })
         let pyodideWorker = await Comlink.wrap(worker);
         await pyodideWorker.init();
         pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
