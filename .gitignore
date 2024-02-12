@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 togit.sh
+.firebaserc
+firebase.json
+demo.sh
+.firebase
