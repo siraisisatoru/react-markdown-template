@@ -13,7 +13,13 @@ To extend the idea of rendering markdown files in React which may be useful in s
 This project was built on Vite and Reactjs. The page was decorated with Tailwind CSS and Daisyui.
 
 # Live Demo
-The under-developing demo is hosted on Google Firebase and can be accessed here [https://siraisinotes-demo.web.app/test](https://siraisinotes-demo.web.app/test)
+The under-developing demo is hosted on Google Firebase and can be accessed here [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
+
+- [x] Frontpage [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
+- [x] Markdown render samples [https://siraisinotes-demo.web.app/test](https://siraisinotes-demo.web.app/test)
+- [x] Page from markdown files [https://siraisinotes-demo.web.app/coding_notes/algorithm_c](https://siraisinotes-demo.web.app/coding_notes/algorithm_c) and [https://siraisinotes-demo.web.app/coding_notes/python](https://siraisinotes-demo.web.app/coding_notes/python)
+
+
 
 # Supported features
 
@@ -46,6 +52,7 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - 💭 Enhance code block render (Render once and add corresponding CSS)
 - 💭 Upgrade Mermaid plugin
 - 💭 Image processing using Sharp js
+- 💭 Execute C code on Markdown page
 
 
 ## Legend
