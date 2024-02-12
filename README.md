@@ -23,7 +23,9 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - ✅ Modularise markdown test page into react components
   - ✅ Markdown renderer
   - ✅ Theme switch in the navigation bar
-- ✅ Python code block (Pyodide) 
+- ✅ Python code block (Pyodide)
+- ✅ Generate page depending on markdown file name
+
 
 <!-- <br> -->
 <!-- - ⚠️  -->
@@ -31,13 +33,13 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 <br>
 
 
-- 🚧 Generate page depending on markdown file name
 - 🚧 General Pages components
   - 🚧 Nav_bar
   - 🚧 Footer
   - 🚧 Tool manual
   - 🚧 Markdown page 
   - 🚧 Frontpage
+
 
 <br>
 
@@ -46,10 +48,30 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - 💭 Image processing using Sharp js
 
 
-legend: 
+## Legend
 | ✅ | ⚠️ | 🚧 |💭|
 |:---:|:---:|:---:|:---:|
 | Done  | Buggy  |  Working on | Brief Idea |
+
+## Notes
+### Markdown file structure
+
+This template aimed to build an automatically constructed wiki-liked react app. To achieve this, the routing was based on file structure within `./src` folder. By default, `react-route-dom` will create routes within `Notes` folder excluding `markdownCheatsheet.md` file.
+
+```md
+.
+├── Notes
+│   ├── coding_notes
+│   │   ├── algorithm_c.md      <- become `<base url>/coding_notes/algorithm_c`
+│   │   └── python.md           <- become `<base url>/coding_notes/python`
+│   └── markdownCheatsheet.md
+├── page
+├── utils
+...
+```
+
+The filtering behavior was defined in `App.jsx` file which can be customized.
+
 
 # Render results
 
