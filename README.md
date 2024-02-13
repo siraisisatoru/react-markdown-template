@@ -18,7 +18,7 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - [x] Frontpage [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
 - [x] Markdown render samples [https://siraisinotes-demo.web.app/test](https://siraisinotes-demo.web.app/test)
 - [x] Page from markdown files [https://siraisinotes-demo.web.app/coding_notes/algorithm_c](https://siraisinotes-demo.web.app/coding_notes/algorithm_c) and [https://siraisinotes-demo.web.app/coding_notes/python](https://siraisinotes-demo.web.app/coding_notes/python)
-
+- [x] Index page for markdown pages [https://siraisinotes-demo.web.app/notes](https://siraisinotes-demo.web.app/notes)
 
 
 # Supported features
@@ -31,7 +31,7 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
   - ✅ Theme switch in the navigation bar
 - ✅ Python code block (Pyodide)
 - ✅ Generate page depending on markdown file name
-
+- ✅ Index page for listing all markdown files
 
 <!-- <br> -->
 <!-- - ⚠️  -->

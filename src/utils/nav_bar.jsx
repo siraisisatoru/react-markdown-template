@@ -14,7 +14,7 @@ const Nav_bar = () => {
                         setDarkTheme(
                             event.target.value == "dark"
                                 ? true
-                                : event.target.Ívalue == "light"
+                                : event.target.value == "light"
                                 ? false
                                 : GetInitialTheme()
                         );

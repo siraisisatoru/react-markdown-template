@@ -8,6 +8,7 @@ import NoMatch from "./page/404";
 import TestPage from "./page/test";
 
 import MarkdownPage from "./page/markdownPage";
+import NoteIndex from "./page/noteIndex";
 
 function App() {
     const noteBase = "Notes"; // modify this to change base folder stores markdown files
@@ -30,7 +31,7 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="test" element={<TestPage />} />
-                
+
                 {/* Dynamically generate routes for each markdown file */}
                 {Object.entries(notesList).map(([folder, files]) =>
                     files.map((file, index) => (
@@ -47,6 +48,7 @@ function App() {
                     ))
                 )}
 
+                <Route exact path="notes" element={<NoteIndex notesList={notesList} />} />
                 <Route path="/*" element={<NoMatch />} />
             </Routes>
         </Router>
