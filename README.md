@@ -83,6 +83,9 @@ The filtering behavior was defined in `App.jsx` file which can be customized.
 ### CPP code block 
 The implementation of CPP worker (`src/utils/cpp_worker`) was adopted from [https://github.com/InfiniteXyy/playcode](https://github.com/InfiniteXyy/playcode).
 
+### Similar projects
+#### - [rdoc](https://github.com/jaywcjlove/rdoc)
+rdoc is a project aimed at producing blog pages from mardown which is similar to this project. However, rdoc stopped updating for 5 years. In contrast, this project is currently under maintenance and built based on the most recent packages (including React and Pyodide).
 
 
 # Render results
