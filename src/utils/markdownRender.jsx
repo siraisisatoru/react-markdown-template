@@ -34,11 +34,11 @@ import { Prism as SyntaxHighlighter, createElement } from "react-syntax-highligh
 import { vscDarkPlus, coldarkCold } from "react-syntax-highlighter/dist/cjs/styles/prism";
 // SYNTAXHIGHLIGHTER ======================================
 
-// PYTHON =================================================
+// PYTHON & CPP ===========================================
 import Codeblock from "./../utils/codeblock";
 import * as Comlink from "comlink/dist/esm/comlink";
 import { useAsync } from "react-use";
-// PYTHON =================================================
+// PYTHON & CPP ===========================================
 
 // UILT  ==================================================
 import DocumentDuplicateIcon from "@heroicons/react/24/outline/DocumentDuplicateIcon";
@@ -119,20 +119,27 @@ const MarkdownRender = (renderProps) => {
     }
     const { isDarkTheme, setDarkTheme } = UseTheme();
 
-
     const pyodideRef = useRef(null); // Ref to store the Comlink instance
+    const cppRef = useRef(null); // Ref to store the Comlink instance
     const { loading } = useAsync(async () => {
-        // const worker = new Worker();
-        const worker = new Worker(new URL('./js/worker.js', import.meta.url), { type: 'module' })
-        let pyodideWorker = await Comlink.wrap(worker);
+        const py_worker = new Worker(new URL("./js/py_worker.js", import.meta.url), {
+            type: "module",
+        });
+        let pyodideWorker = await Comlink.wrap(py_worker);
         await pyodideWorker.init();
         pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
+
+        const cpp_worker = new Worker(new URL("./cpp_worker/cpp_worker.js", import.meta.url), {
+            type: "module",
+        });
+        let cppWorkerApi = await Comlink.wrap(cpp_worker);
+        cppRef.current = cppWorkerApi; // Store the Comlink instance in the ref
     }, []);
 
     return (
         <>
             {console.log("render")}
-            
+
             <div className=" p-11">
                 <article className="prose !max-w-[80ch]">
                     <ReactMarkdown
@@ -230,6 +237,14 @@ const MarkdownRender = (renderProps) => {
                                     ""
                                 );
                                 const libList = node.children[0].properties?.dataMeta;
+                                const dataMeta = node.children[0].properties?.dataMeta;
+                                const isRun = dataMeta?.match(/^(run\b.*)$/i);
+                                const isPython =
+                                    language?.toLowerCase() == "py" ||
+                                    language?.toLowerCase() == "python";
+                                const isCpp =
+                                    language?.toLowerCase() == "cpp" ||
+                                    language?.toLowerCase() == "c";
 
                                 return (
                                     <>
@@ -314,25 +329,42 @@ const MarkdownRender = (renderProps) => {
                                             </pre>
                                         </div>
 
-                                        {node.children[0].properties?.dataMeta?.match(
-                                            /^(run\b.*)$/i
-                                        ) ? (
+                                        {isRun && isPython ? (
                                             <>
-                                            {/* the code in this code block is python, try to render the output for it */}
-                                            <pre className="not-prose">
-                                                {loading ? (
-                                                    <p>Loading Pyodide...</p>
-                                                ) : (
-                                                    <div>
-                                                        <Codeblock
-                                                            pyodide={pyodideRef.current}
-                                                            code={codeChunk}
-                                                            libListStr={libList}
-                                                        />
-                                                    </div>
-                                                )}
-                                            </pre>
-                                        </>
+                                                {/* the code in this code block is python, try to render the output for it */}
+                                                <pre className="not-prose">
+                                                    {loading ? (
+                                                        <p>Loading Pyodide...</p>
+                                                    ) : (
+                                                        <div>
+                                                            <Codeblock
+                                                                langWorker={pyodideRef.current}
+                                                                code={codeChunk}
+                                                                metaInfo={dataMeta}
+                                                                lang={"py"}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </pre>
+                                            </>
+                                        ) : isRun && isCpp ? (
+                                            <>
+                                                {/* the code in this code block is Cpp, try to render the output for it */}
+                                                <pre className="not-prose">
+                                                    {loading ? (
+                                                        <p>Loading Clang...</p>
+                                                    ) : (
+                                                        <div>
+                                                            <Codeblock
+                                                                langWorker={cppRef.current}
+                                                                code={codeChunk}
+                                                                metaInfo={dataMeta}
+                                                                lang={"cpp"}
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </pre>
+                                            </>
                                         ) : (
                                             <>
                                                 <span>{node.children[0].properties?.dataMeta}</span>

@@ -29,7 +29,9 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - ✅ Modularise markdown test page into react components
   - ✅ Markdown renderer
   - ✅ Theme switch in the navigation bar
-- ✅ Python code block (Pyodide)
+- ✅ Code block execution
+  - ✅ Python code block (Pyodide)
+  - ✅ CPP code block
 - ✅ Generate page depending on markdown file name
 - ✅ Index page for listing all markdown files
 
@@ -52,7 +54,6 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 - 💭 Enhance code block render (Render once and add corresponding CSS)
 - 💭 Upgrade Mermaid plugin
 - 💭 Image processing using Sharp js
-- 💭 Execute C code on Markdown page
 
 
 ## Legend
@@ -78,6 +79,10 @@ This template aimed to build an automatically constructed wiki-liked react app. 
 ```
 
 The filtering behavior was defined in `App.jsx` file which can be customized.
+
+### CPP code block 
+The implementation of CPP worker (`src/utils/cpp_worker`) was adopted from [https://github.com/InfiniteXyy/playcode](https://github.com/InfiniteXyy/playcode).
+
 
 
 # Render results

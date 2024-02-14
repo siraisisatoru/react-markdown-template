@@ -1,6 +1,3 @@
-
-
-
 # Contents
 
 # heading test
@@ -188,6 +185,7 @@ https://tailwindcss.com/_next/static/media/tailwindui-small@75.8bb955b2.jpg
 https://tailwindcss.com/_next/static/media/tailwindui-small@75.8bb955b2.jpg
 
 ![Minion](https://octodex.github.com/images/minion.png)
+
 ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
 
 Like links, Images also have a footnote style syntax
@@ -388,43 +386,56 @@ A :i[lovely] language know as :abbr[HTML]{title="HyperText Markup Language"}.
 #### Python wrap
 
 ---
+
 =y= Wrap the Python code in a customised container ==
 
 :::note{.python}
 Within note
+
 ```python run
+# python run
 print('test')
 ```
+
 :::
 
 ---
 
-```python 
+```python
+# python
 print('test')
 ```
 
 ```python run
+# python run
 print('test')
 ```
 
 ```python notrun second
+# python notrun second
 print('test')
 ```
 
 ```python notrun second lib:"lib1",'numpy'
+# python notrun second lib:"lib1",'numpy'
 print('test')
 ```
 
 ### Python PYODIDE
 
 :::note{.python}
+
 ```python rUn lib:["matplotlib",'numpy']
+# python rUn lib:["matplotlib",'numpy']
 print('test')
 ```
+
 :::
 
 :::note{.python}
+
 ```python run
+# python run
 import numpy as np
 import sys
 v = sys.version
@@ -439,15 +450,98 @@ if (True):
   print('true')
 x = 123
 print(type(x))
-
-
 ```
+
 :::
 
+```python run monitor
+# python run monitor
+# matplotlib does not work directly with the dome element. a filtering work arround was implemented in the codeblock 
+from matplotlib import pyplot as plt
+import io
+import base64
+import js
 
+class Dud:
+    def __init__(self, *args, **kwargs) -> None:
+        return
+    def __getattr__(self, __name: str):
+        return Dud
+js.document = Dud()
 
+# Create a plot
+x1, y1 = [-1, 12], [1, 4]
+plt.plot(x1, y1)
+# Print base64 string to stdout
+bytes_io = io.BytesIO()
+plt.savefig(bytes_io, format='jpg')
+bytes_io.seek(0)
+base64_encoded_spectrogram = base64.b64encode(bytes_io.read())
+print("<img src=\"data:image/png;base64,"+base64_encoded_spectrogram.decode('utf-8') + "\">")
+# ^ codeblock component will look for pattern above and convert into img element
+print("string after")
+# Create a plot
+x1, y1 = [-20, 5], [1, 15]
+plt.plot(x1, y1)
+# Print base64 string to stdout
+bytes_io = io.BytesIO()
+plt.savefig(bytes_io, format='jpg')
+bytes_io.seek(0)
+base64_encoded_spectrogram = base64.b64encode(bytes_io.read())
+print("<img src=\"data:image/png;base64,"+base64_encoded_spectrogram.decode('utf-8') + "\">")
+```
 
+### CPP
 
+```cpp run
+// adopted from https://www.geeksforgeeks.org/bubble-sort/
+#include <iostream>
+using namespace std;
+// An optimized version of Bubble Sort
+void bubbleSort(int arr[], int n){
+    int i, j;
+    bool swapped;
+    for (i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(arr[j], arr[j + 1]);
+                swapped = true;
+            }
+        }
+        // If no two elements were swapped
+        // by inner loop, then break
+        if (swapped == false)
+            break;
+    }
+}
+// Function to print an array
+void printArray(int arr[], int size){
+    int i;
+    for (i = 0; i < size; i++){
+        cout << "\t" << arr[i] ;
+        if (i%15 ==14){
+            cout << endl;
+        }
+    }
+}
+// Driver program to test above functions
+int main(){
+  int arr[] = {2, 60, 78, 88, 30, 75, 63, 6, 78, 94, 14, 40, 4,
+        86, 58, 21, 88, 1, 65, 45, 2, 94, 42, 22, 95, 79, 42, 80,
+        13, 54, 48, 40, 62, 88, 90, 88, 51, 8, 88, 61, 63, 92, 28,
+        88, 9, 73, 53, 12, 78, 39, 62, 10, 83, 95, 17, 76, 76, 26,
+        77, 38, 2, 35, 98, 44, 77, 41, 36, 96, 47, 70, 99, 10, 98,
+        52, 15, 23, 21, 64, 47, 88, 80, 4, 41, 21, 17, 19, 5, 7, 34,
+        45, 10, 18, 15, 76, 14, 42, 74, 77, 28, 38, 24, 26, 3, 25, 27,
+        18, 10, 56, 30, 40, 54, 16, 77, 54, 60, 96, 80, 13, 6, 48, 13};
+    int N = sizeof(arr) / sizeof(arr[0]);
+    bubbleSort(arr, N);
+    cout << "Sorted array:  " <<  endl;
+    printArray(arr, N);
+    return 0;
+}
+```
 
 ### Mermaid
 
@@ -590,7 +684,6 @@ Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
 Rel(SystemC, customerA, "Sends e-mails to")
 ```
 
-
 # A demo of `react-markdown`
 
 ## Overview
@@ -605,12 +698,12 @@ Rel(SystemC, customerA, "Sends e-mails to")
 
 Here is an example of a plugin in action
 ([`remark-toc`](https://github.com/remarkjs/remark-toc)).
-
-The first section of this page is replaced with the table of content list.
-
+**This section is replaced by an actual table of contents**.
 
 ## Syntax highlighting
-This portion had been done via react-syntax-highlighter
+
+Here is an example of a plugin to highlight code:
+[`rehype-highlight`](https://github.com/rehypejs/rehype-highlight).
 
 ```js
 import React from "react";
@@ -656,7 +749,8 @@ https://example.com
 
 ⚠️ HTML in markdown is quite unsafe, but if you want to support it, you can
 use [`rehype-raw`](https://github.com/rehypejs/rehype-raw).
-
+You should probably combine it with
+[`rehype-sanitize`](https://github.com/rehypejs/rehype-sanitize).
 
 ```html
 <blockquote>👆 Use the toggle above to add the plugin.</blockquote>
@@ -699,12 +793,10 @@ ReactDOM.render(
 );
 ```
 
-
 # React notes
 
 ## execute async
 
 ```js
-(async () => {
-})();
+(async () => {})();
 ```
