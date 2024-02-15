@@ -47,6 +47,7 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
   - 🚧 Tool manual
   - 🚧 Markdown page 
   - 🚧 Frontpage
+  - ✅ 404 page
 
 
 <br>
