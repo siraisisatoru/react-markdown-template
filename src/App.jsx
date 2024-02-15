@@ -13,19 +13,13 @@ import NoteIndex from "./page/noteIndex";
 function App() {
     const noteBase = "Notes"; // modify this to change base folder stores markdown files
 
-    const modules = import.meta.glob("./**/**/*.md", { query: "?raw", eager: true });
-    const notesList = Object.keys(modules)
-        .filter(
-            (filePath) =>
-                filePath.startsWith(`./${noteBase}/`) && !filePath.endsWith("markdownCheatsheet.md")
-        )
-        .reduce((acc, filePath) => {
-            const [folder, file] = filePath
-                .replace(`./${noteBase}/`, "")
-                .split("/")
-                .map((part) => part.replace(".md", ""));
-            return { ...acc, [folder]: [...(acc[folder] || []), file] };
-        }, {});
+    const modules = import.meta.glob("./**/*.md", { query: "?raw", eager: true }); // get all md files within noteBase directory
+    const notesList = Object.keys(modules).filter(
+        (filePath) =>
+            filePath.startsWith(`./${noteBase}/`) && !filePath.endsWith("markdownCheatsheet.md")
+    );
+    const regex = /\.\/Notes\/((?:[^/]+\/)+)[^/]+\.md/;
+
     return (
         <Router>
             <Routes>
@@ -33,21 +27,15 @@ function App() {
                 <Route exact path="test" element={<TestPage />} />
 
                 {/* Dynamically generate routes for each markdown file */}
-                {Object.entries(notesList).map(([folder, files]) =>
-                    files.map((file, index) => (
-                        <Route
-                            key={`${folder}-${index}`}
-                            exact
-                            path={`/${folder}/${file}`}
-                            element={
-                                <MarkdownPage
-                                    mdstr={modules[`./${noteBase}/${folder}/${file}.md`].default}
-                                />
-                            }
-                        />
-                    ))
-                )}
-
+                {notesList.map((noteUrl, index) => (
+                    <Route
+                        key={`${noteUrl.match(regex)[1]}-${index}`}
+                        exact
+                        path={`${noteUrl.replace(`./${noteBase}/`, "").replace(".md", "")}`}
+                        element={<MarkdownPage mdstr={modules[noteUrl].default} />}
+                    />
+                ))}
+                
                 <Route exact path="notes" element={<NoteIndex notesList={notesList} />} />
                 <Route path="/*" element={<NoMatch />} />
             </Routes>

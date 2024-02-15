@@ -33,7 +33,7 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
   - ✅ Python code block (Pyodide)
   - ✅ CPP code block
 - ✅ Generate page depending on markdown file name
-- ✅ Index page for listing all markdown files
+- ✅ Index page for listing all markdown files (support sub-directories)
 
 <!-- <br> -->
 <!-- - ⚠️  -->
@@ -70,8 +70,13 @@ This template aimed to build an automatically constructed wiki-liked react app. 
 .
 ├── Notes
 │   ├── coding_notes
-│   │   ├── algorithm_c.md      <- become `<base url>/coding_notes/algorithm_c`
-│   │   └── python.md           <- become `<base url>/coding_notes/python`
+│   │   ├── python_tutorials
+│   │   │   ├── python ch1
+│   │   │   │   └── ch1.md      <- become `<base url>/coding_notes/python_tutorials/python%20ch1/ch1`
+│   │   │   ├── python ch2
+│   │   │   │   └── ch2.md      <- become `<base url>/coding_notes/python_tutorials/python%20ch2/ch2`
+│   │   │   └── python.md       <- become `<base url>/coding_notes/python_tutorials/python`
+│   │   └── algorithm_c.md      <- become `<base url>/coding_notes/algorithm_c`
 │   └── markdownCheatsheet.md
 ├── page
 ├── utils

@@ -3,52 +3,77 @@ import { ThemeProvider } from "../utils/themeContext";
 import Nav_bar from "../utils/nav_bar";
 
 function NoteIndex(renderProps) {
-    const renderCourse = (mdFileName, url) => {
+    function FileItem({ files }) {
         return (
-            <li key={mdFileName}>
-                <a href={url}>{mdFileName}</a>
-            </li>
+            <ul className="menu">
+                {files.map((file, index) => (
+                    <li key={index}>
+                        <a href={file.url}>{file.name}</a>
+                    </li>
+                ))}
+            </ul>
         );
-    };
+    }
 
-    const renderNode = (key, value) => {
-        if (Array.isArray(value)) {
-            return (
-                <li key={key}>
-                    <strong className="pointer-events-none">{key}</strong>
-                    <ul>
-                        {value.map((mdFileName) => {
-                            const url = `/${key}/${mdFileName}`;
-                            return renderCourse(mdFileName, url);
-                        })}
-                    </ul>
-                </li>
-            );
-        } else if (typeof value === "object" && value !== null) {
-            return (
-                <li key={key}>
-                    <strong>{key}</strong>
-                    <ul>{renderTree(value)}</ul>
-                </li>
-            );
+    function Directory({ directory }) {
+        return (
+            <ul className="menu">
+                {Object.entries(directory).map(([key, value]) => (
+                    <li key={key}>
+                        <strong className="pointer-events-none">{key}</strong>
+                        <FileItem files={value.files} />
+                        <Directory directory={value.subdirectory} />
+                    </li>
+                ))}
+            </ul>
+        );
+    }
+    function addElement(obj, elements, filename, url) {
+        if (elements.length === 0) {
+            return obj;
         } else {
-            return null;
+            const currentElement = elements.shift();
+            if (!obj[currentElement]) {
+                obj[currentElement] = { files: [], subdirectory: {} };
+            }
+            if (elements.length === 0) {
+                obj[currentElement].files.push({ name: filename, url: url });
+            }
+            obj[currentElement].subdirectory = addElement(
+                obj[currentElement].subdirectory,
+                elements,
+                filename,
+                url
+            );
+    
+            return obj;
         }
+    }
+    
+    const renderTree = (notesList) => {
+        function extractInfo(filePath) {
+            const parts = filePath.split("/");
+            const directories = parts.slice(2, parts.length - 1);
+            const filename = parts[parts.length - 1].split(".")[0];
+            const url = filePath.replace(parts[0] + "/" + parts[1], "").replace(".md", "");
+            return { directories, filename, url };
+        }
+    
+        let groupedFiles = {};
+        notesList.forEach((filePath) => {
+            const { directories, filename, url } = extractInfo(filePath);
+            groupedFiles = addElement(groupedFiles, directories, filename, url);
+        });
+    
+        return <Directory directory={groupedFiles} />;
     };
 
-    const renderTree = (obj) => {
-        return Object.entries(obj).map(([key, value]) => {
-            return renderNode(key, value);
-        });
-    };
 
     return (
         <>
             <ThemeProvider>
                 <Nav_bar></Nav_bar>
-                <ul className="menu">{renderTree(renderProps.notesList)}</ul>
-
-                {/* <MarkdownRender mdstr={renderProps.mdstr}></MarkdownRender> */}
+                {renderTree(renderProps.notesList)}
             </ThemeProvider>
         </>
     );
