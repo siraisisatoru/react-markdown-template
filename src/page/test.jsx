@@ -1,15 +1,23 @@
 import { ThemeProvider } from "../utils/themeContext";
 import Nav_bar from "../utils/nav_bar";
 import MarkdownRender from "../utils/markdownRender";
+import Footer from "../utils/footer";
 import mdstr from "./../Notes/markdownCheatsheet.md?raw";
 
 function TestPage() {
     return (
         <>
-            <ThemeProvider>
-                <Nav_bar></Nav_bar>
-                <MarkdownRender mdstr={mdstr}></MarkdownRender>
-            </ThemeProvider>
+            <div className="flex flex-col min-h-screen">
+                <ThemeProvider>
+                    <div className="mb-6">
+                        <Nav_bar></Nav_bar>
+                        <div className=" flex flex-col max-w-[120ch] px-8 md:px-20 mx-auto mt-6">
+                            <MarkdownRender mdstr={mdstr}></MarkdownRender>
+                        </div>
+                    </div>
+                    <Footer></Footer>
+                </ThemeProvider>
+            </div>
         </>
     );
 }

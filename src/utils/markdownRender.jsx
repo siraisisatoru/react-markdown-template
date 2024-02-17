@@ -21,6 +21,7 @@ import { h } from "hastscript";
 import remarkBreak from "remark-breaks";
 import remarkImg from "remark-images";
 import remarkUnwrapImages from "remark-unwrap-images";
+import remarkFrontmatter from "remark-frontmatter";
 
 import rehypeAutolink from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
@@ -41,11 +42,12 @@ import { useAsync } from "react-use";
 // PYTHON & CPP ===========================================
 
 // UILT  ==================================================
-import DocumentDuplicateIcon from "@heroicons/react/24/outline/DocumentDuplicateIcon";
-
+import { FaRegCopy } from "react-icons/fa";
+import yaml from "js-yaml";
 // UILT  ==================================================
 
 const MarkdownRender = (renderProps) => {
+    // >> Customise remark plugin =========================
     function remarkCustomPlugin() {
         /**
          * @param {import('mdast').Root} tree
@@ -94,6 +96,17 @@ const MarkdownRender = (renderProps) => {
                                 tagName,
                                 { class: "my-2 alert alert-error", role: "alert" } || {}
                             ).properties;
+                        } else if (node.attributes.class == "openChat") {
+                            data.hProperties = h(
+                                tagName,
+                                { class: "my-2 ml-4 chat chat-start"} || {}
+                            ).properties;
+
+                        } else if (node.attributes.class == "closeChat") {
+                            data.hProperties = h(
+                                tagName,
+                                { class: "my-2 mr-4 chat chat-end"} || {}
+                            ).properties;
                         } else if (node.attributes.class == "python") {
                             // included but not used in md
                             data.hProperties = h(
@@ -117,403 +130,440 @@ const MarkdownRender = (renderProps) => {
             });
         };
     }
-    const { isDarkTheme, setDarkTheme } = UseTheme();
+    // >> Customise remark plugin =========================
 
+    // >> Theme parameter =================================
+    const { isDarkTheme, setDarkTheme } = UseTheme();
+    // >> Theme parameter =================================
+
+    // >> Get markdown parameter ==========================
+    // Split the markdown string by the YAML delimiter ("+=+=+=+")
+    const mdConfig = renderProps.mdstr.split("+=+=+=+")[1];
+
+    let jsonData = {
+        title: "YOU NEED A TITLE",
+        date: "2001-01-01 00:00:00",
+        exeCPP: false,
+        exePYTHON: false,
+        abstract: "",
+    };
+    // Convert YAML to JSON
+    if (mdConfig?.length > 1) {
+        const mdConfigJson = yaml.load(mdConfig);
+        jsonData.title = mdConfigJson?.title || jsonData.title;
+        jsonData.title = jsonData.title.charAt(0).toUpperCase() + jsonData.title.slice(1);
+        jsonData.date = mdConfigJson?.date || jsonData.date;
+        jsonData.exeCPP = mdConfigJson?.exeCPP || jsonData.exeCPP;
+        jsonData.exePYTHON = mdConfigJson?.exePYTHON || jsonData.exePYTHON;
+        jsonData.abstract = mdConfigJson?.abstract || jsonData.abstract;
+    }
+    // >> Get markdown parameter ==========================
+
+    // >> Setup code workers ==============================
     const pyodideRef = useRef(null); // Ref to store the Comlink instance
     const cppRef = useRef(null); // Ref to store the Comlink instance
     const { loading } = useAsync(async () => {
-        const py_worker = new Worker(new URL("./js/py_worker.js", import.meta.url), {
-            type: "module",
-        });
-        let pyodideWorker = await Comlink.wrap(py_worker);
-        await pyodideWorker.init();
-        pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
+        if (jsonData.exeCPP) {
+            const py_worker = new Worker(new URL("./js/py_worker.js", import.meta.url), {
+                type: "module",
+            });
+            let pyodideWorker = await Comlink.wrap(py_worker);
+            await pyodideWorker.init();
+            pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
+        }
 
-        const cpp_worker = new Worker(new URL("./cpp_worker/cpp_worker.js", import.meta.url), {
-            type: "module",
-        });
-        let cppWorkerApi = await Comlink.wrap(cpp_worker);
-        cppRef.current = cppWorkerApi; // Store the Comlink instance in the ref
+        if (jsonData.exePYTHON) {
+            const cpp_worker = new Worker(new URL("./cpp_worker/cpp_worker.js", import.meta.url), {
+                type: "module",
+            });
+            let cppWorkerApi = await Comlink.wrap(cpp_worker);
+            cppRef.current = cppWorkerApi; // Store the Comlink instance in the ref
+        }
     }, []);
+    // >> Setup code workers ==============================
 
     return (
         <>
-            {console.log("render")}
+            <div className="flex flex-col gap-2 mt-3">
+                <h1 className="text-4xl md:text-5xl">{jsonData.title}</h1>
+                <p>Created on {jsonData.date}</p>
+                {jsonData.abstract != "" ? (
+                    <>
+                        <p className="indent-4 md:text-lg my-2">{jsonData.abstract}</p>
+                    </>
+                ) : (
+                    <></>
+                )}
+            </div>
 
-            <div className=" p-11">
-                <article className="prose !max-w-[80ch]">
-                    <ReactMarkdown
-                        children={renderProps.mdstr}
-                        remarkPlugins={[
-                            remarkSupersub,
-                            remarkIns,
-                            remarkDeflist,
-                            remarkBreak,
-                            remarkDirective,
-                            [
-                                remarkImg,
-                                {
-                                    imageExtensions: [
-                                        "JPG",
-                                        "avif",
-                                        "gif",
-                                        "jpeg",
-                                        "jpg",
-                                        "png",
-                                        "svg",
-                                        "webp",
-                                    ],
-                                },
-                            ],
-                            remarkUnwrapImages,
-                            remarkMermaid,
-                            [remarkGfm, { singleTilde: false }],
-                            [remarkCollapse, { test: "Colltest" }],
-                            [remarkEmoji, { emoticon: false }],
-                            [remarkToc, { maxDepth: 3 }],
-                            [
-                                remarkMarkers,
-                                {
-                                    dictionary: {
-                                        b: "DeepSkyBlue",
-                                        r: "HotPink",
-                                    },
-                                    markerProperties: (color) => {
-                                        return color
-                                            ? {
-                                                  style: `background-color:${color};`,
-                                              }
-                                            : "";
-                                    },
-                                },
-                            ],
-                            remarkCustomPlugin,
-                        ]}
-                        rehypePlugins={[
-                            () => {
-                                return function (tree) {
-                                    visit(tree, function (node) {
-                                        if (node.tagName == "code" && node.data?.meta) {
-                                            node.properties.dataMeta = node.data.meta;
-                                        }
-                                    });
-                                };
+            <article className="prose mx-auton !w-full !max-w-full">
+                <ReactMarkdown
+                    children={renderProps.mdstr}
+                    remarkPlugins={[
+                        remarkSupersub,
+                        remarkIns,
+                        remarkDeflist,
+                        remarkBreak,
+                        remarkDirective,
+                        [
+                            remarkImg,
+                            {
+                                imageExtensions: [
+                                    "JPG",
+                                    "avif",
+                                    "gif",
+                                    "jpeg",
+                                    "jpg",
+                                    "png",
+                                    "svg",
+                                    "webp",
+                                ],
                             },
-                            rehypeRaw,
-                            rehypeSlug,
-                            [
-                                rehypeAutolink,
-                                {
-                                    behavior: "wrap",
-                                    properties: {
-                                        class: "flex flex-wrap items-center gap-2 group w-fit no-underline",
-                                    },
-                                    content: [
-                                        {
-                                            type: "element", // Type of node
-                                            tagName: "span", // HTML tag name
-                                            properties: {
-                                                class: " text-base hidden group-hover:block",
-                                            }, // HTML attributes
-                                            children: [
-                                                // Child nodes
-                                                {
-                                                    type: "text", // Type of child node (text node)
-                                                    value: "#", // Text content
-                                                },
-                                            ],
-                                        },
-                                    ],
+                        ],
+                        remarkUnwrapImages,
+                        remarkMermaid,
+                        [remarkGfm, { singleTilde: false }],
+                        [remarkCollapse, { test: "Colltest" }],
+                        [remarkEmoji, { emoticon: false }],
+                        [remarkToc, { maxDepth: 3 }],
+                        [
+                            remarkMarkers,
+                            {
+                                dictionary: {
+                                    b: "DeepSkyBlue",
+                                    r: "HotPink",
                                 },
-                            ],
-                        ]}
-                        components={{
-                            pre: (props) => {
-                                const { children, className, node, ...rest } = props;
-                                const codeChunk = node.children[0].children[0].value;
-                                const [copyTip, setCopyTip] = useState("Copy code");
-                                const language = children.props.className?.replace(
-                                    /language-/g,
-                                    ""
-                                );
-                                const libList = node.children[0].properties?.dataMeta;
-                                const dataMeta = node.children[0].properties?.dataMeta;
-                                const isRun = dataMeta?.match(/^(run\b.*)$/i);
-                                const isPython =
-                                    language?.toLowerCase() == "py" ||
-                                    language?.toLowerCase() == "python";
-                                const isCpp =
-                                    language?.toLowerCase() == "cpp" ||
-                                    language?.toLowerCase() == "c";
+                                markerProperties: (color) => {
+                                    return color
+                                        ? {
+                                              style: `background-color:${color};`,
+                                          }
+                                        : "";
+                                },
+                            },
+                        ],
+                        [remarkFrontmatter, [{ type: "yaml", fence: "+=+=+=+" }]],
+                        remarkCustomPlugin,
+                    ]}
+                    rehypePlugins={[
+                        () => {
+                            return function (tree) {
+                                visit(tree, function (node) {
+                                    if (node.tagName == "code" && node.data?.meta) {
+                                        node.properties.dataMeta = node.data.meta;
+                                    }
+                                });
+                            };
+                        },
+                        rehypeRaw,
+                        rehypeSlug,
+                        [
+                            rehypeAutolink,
+                            {
+                                behavior: "wrap",
+                                properties: {
+                                    class: "flex flex-wrap items-center gap-2 group w-fit no-underline",
+                                },
+                                content: [
+                                    {
+                                        type: "element", // Type of node
+                                        tagName: "span", // HTML tag name
+                                        properties: {
+                                            class: " text-base hidden group-hover:block",
+                                        }, // HTML attributes
+                                        children: [
+                                            // Child nodes
+                                            {
+                                                type: "text", // Type of child node (text node)
+                                                value: "#", // Text content
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    ]}
+                    components={{
+                        pre: (props) => {
+                            const { children, className, node, ...rest } = props;
+                            const codeChunk = node.children[0].children[0].value;
+                            const [copyTip, setCopyTip] = useState("Copy code");
+                            const language = children.props.className?.replace(/language-/g, "");
+                            const dataMeta = node.children[0].properties?.dataMeta;
+                            const isRun = dataMeta?.match(/^(run\b.*)$/i);
+                            const isPython =
+                                language?.toLowerCase() == "py" ||
+                                language?.toLowerCase() == "python";
+                            const isCpp =
+                                language?.toLowerCase() == "cpp" || language?.toLowerCase() == "c";
+                            return (
+                                <>
+                                    <div className="relative overflow-x-hidden ">
+                                        <button
+                                            className="right-0 tooltip tooltip-left absolute z-40 mr-2 mt-5"
+                                            data-tip={copyTip}
+                                            onClick={async () => {
+                                                setCopyTip("Copied");
+                                                try {
+                                                    await navigator.clipboard.writeText(codeChunk);
+                                                    await new Promise((resolve) =>
+                                                        setTimeout(resolve, 500)
+                                                    );
+                                                } catch (error) {
+                                                    console.error(error.message);
+                                                }
+                                                setCopyTip(`Copy code`);
+                                            }}>
+                                            {/* <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer hover:text-blue-600" /> */}
+                                            <FaRegCopy className="h-5 w-5 cursor-pointer hover:text-blue-600" />
+                                        </button>
 
+                                        {language ? (
+                                            <span className="right-0 bottom-0 z-40 absolute mb-4 mr-2 rounded-lg p-1 text-xs uppercase text-base-300 bg-base-content/40 backdrop-blur-sm">
+                                                {language}
+                                            </span>
+                                        ) : (
+                                            <></>
+                                        )}
+                                        <pre className="not-prose ">
+                                            <SyntaxHighlighter
+                                                //
+                                                style={isDarkTheme ? vscDarkPlus : coldarkCold}
+                                                // style={vscDarkPlus}
+                                                language={language ? language : "plaintext"}
+                                                PreTag="div"
+                                                className="text-sm mockup-code "
+                                                codeTagProps={{ className: " " }}
+                                                showLineNumbers={true}
+                                                useInlineStyles={true}
+                                                lineNumberStyle={{ minWidth: "3em" }}
+                                                wrapLongLines={true}
+                                                renderer={({
+                                                    rows,
+                                                    stylesheet,
+                                                    useInlineStyles,
+                                                }) => {
+                                                    return rows.map((row, index) => {
+                                                        const children = row.children;
+                                                        const lineNumberElement = children?.shift();
+
+                                                        /**
+                                                         * We will take current structure of the rows and rebuild it
+                                                         * according to the suggestion here https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/376#issuecomment-1246115899
+                                                         */
+                                                        if (lineNumberElement) {
+                                                            row.children = [
+                                                                lineNumberElement,
+                                                                {
+                                                                    children,
+                                                                    properties: {
+                                                                        className: [],
+                                                                    },
+                                                                    tagName: "span",
+                                                                    type: "element",
+                                                                },
+                                                            ];
+                                                        }
+
+                                                        return createElement({
+                                                            node: row,
+                                                            stylesheet,
+                                                            useInlineStyles,
+                                                            key: index,
+                                                        });
+                                                    });
+                                                }}>
+                                                {String(codeChunk).replace(/\n$/, "")}
+                                            </SyntaxHighlighter>
+                                        </pre>
+                                    </div>
+
+                                    {isRun && isPython ? (
+                                        <>
+                                            {/* the code in this code block is python, try to render the output for it */}
+                                            <pre className="not-prose ">
+                                                {loading ? (
+                                                    <p>Loading Pyodide...</p>
+                                                ) : pyodideRef.current ? (
+                                                    <div>
+                                                        <Codeblock
+                                                            langWorker={pyodideRef.current}
+                                                            code={codeChunk}
+                                                            metaInfo={dataMeta}
+                                                            lang={"py"}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </pre>
+                                        </>
+                                    ) : isRun && isCpp ? (
+                                        <>
+                                            {/* the code in this code block is Cpp, try to render the output for it */}
+                                            <pre className="not-prose">
+                                                {loading ? (
+                                                    <p>Loading Clang...</p>
+                                                ) : cppRef.current ? (
+                                                    <div>
+                                                        <Codeblock
+                                                            langWorker={cppRef.current}
+                                                            code={codeChunk}
+                                                            metaInfo={dataMeta}
+                                                            lang={"cpp"}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </pre>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <span>{node.children[0].properties?.dataMeta}</span>
+                                        </>
+                                    )}
+                                </>
+                            );
+                        },
+
+                        div: ({ node, children, ...props }) => {
+                            if (node.properties.className?.includes("alert")) {
+                                // console.log(children);
+                                // console.log(node);
+                                return (
+                                    <div {...props}>
+                                        {node.properties.className?.includes("alert-info") ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                className="stroke-current shrink-0 w-6 h-6">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        ) : node.properties.className?.includes("alert-success") ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="stroke-current shrink-0 h-6 w-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                />
+                                            </svg>
+                                        ) : node.properties.className?.includes("alert-warning") ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="stroke-current shrink-0 h-6 w-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                                />
+                                            </svg>
+                                        ) : node.properties.className?.includes("alert-error") ? (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="stroke-current shrink-0 h-6 w-6"
+                                                fill="none"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                />
+                                            </svg>
+                                        ) : (
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                className="stroke-info shrink-0 w-6 h-6">
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            </svg>
+                                        )}
+                                        <span>{children.props.children}</span>
+                                    </div>
+                                );
+                            } else if (node.properties.className?.includes("chat")) {
+                                return                                     <div {...props}>
+                                <div className="chat-bubble bg-neutral-content text-neutral">{children.props.children}</div></div>
+                            } else if (node.properties.className?.includes("python_code")) {
                                 return (
                                     <>
-                                        <div className="relative overflow-x-hidden ">
-                                            <button
-                                                className="right-0 tooltip tooltip-left absolute z-40 mr-2 mt-5"
-                                                data-tip={copyTip}
-                                                onClick={async () => {
-                                                    setCopyTip("Copied");
-                                                    try {
-                                                        await navigator.clipboard.writeText(
-                                                            codeChunk
-                                                        );
-                                                        await new Promise((resolve) =>
-                                                            setTimeout(resolve, 500)
-                                                        );
-                                                    } catch (error) {
-                                                        console.error(error.message);
-                                                    }
-                                                    setCopyTip(`Copy code`);
-                                                }}>
-                                                <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer hover:text-blue-600" />
-                                            </button>
-
-                                            {language ? (
-                                                <span className="right-0 bottom-0 z-40 absolute mb-4 mr-2 rounded-lg p-1 text-xs uppercase text-base-300 bg-base-content/40 backdrop-blur-sm">
-                                                    {language}
-                                                </span>
-                                            ) : (
-                                                <></>
-                                            )}
-                                            <pre className="not-prose ">
-                                                <SyntaxHighlighter
-                                                    //
-                                                    style={isDarkTheme ? vscDarkPlus : coldarkCold}
-                                                    language={language ? language : "plaintext"}
-                                                    PreTag="div"
-                                                    className="text-sm mockup-code "
-                                                    codeTagProps={{ className: " " }}
-                                                    showLineNumbers={true}
-                                                    useInlineStyles={true}
-                                                    lineNumberStyle={{ minWidth: "3em" }}
-                                                    wrapLongLines={true}
-                                                    renderer={({
-                                                        rows,
-                                                        stylesheet,
-                                                        useInlineStyles,
-                                                    }) => {
-                                                        return rows.map((row, index) => {
-                                                            const children = row.children;
-                                                            const lineNumberElement =
-                                                                children?.shift();
-
-                                                            /**
-                                                             * We will take current structure of the rows and rebuild it
-                                                             * according to the suggestion here https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/376#issuecomment-1246115899
-                                                             */
-                                                            if (lineNumberElement) {
-                                                                row.children = [
-                                                                    lineNumberElement,
-                                                                    {
-                                                                        children,
-                                                                        properties: {
-                                                                            className: [],
-                                                                        },
-                                                                        tagName: "span",
-                                                                        type: "element",
-                                                                    },
-                                                                ];
-                                                            }
-
-                                                            return createElement({
-                                                                node: row,
-                                                                stylesheet,
-                                                                useInlineStyles,
-                                                                key: index,
-                                                            });
-                                                        });
-                                                    }}>
-                                                    {String(codeChunk).replace(/\n$/, "")}
-                                                </SyntaxHighlighter>
-                                            </pre>
-                                        </div>
-
-                                        {isRun && isPython ? (
-                                            <>
-                                                {/* the code in this code block is python, try to render the output for it */}
-                                                <pre className="not-prose">
-                                                    {loading ? (
-                                                        <p>Loading Pyodide...</p>
-                                                    ) : (
-                                                        <div>
-                                                            <Codeblock
-                                                                langWorker={pyodideRef.current}
-                                                                code={codeChunk}
-                                                                metaInfo={dataMeta}
-                                                                lang={"py"}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </pre>
-                                            </>
-                                        ) : isRun && isCpp ? (
-                                            <>
-                                                {/* the code in this code block is Cpp, try to render the output for it */}
-                                                <pre className="not-prose">
-                                                    {loading ? (
-                                                        <p>Loading Clang...</p>
-                                                    ) : (
-                                                        <div>
-                                                            <Codeblock
-                                                                langWorker={cppRef.current}
-                                                                code={codeChunk}
-                                                                metaInfo={dataMeta}
-                                                                lang={"cpp"}
-                                                            />
-                                                        </div>
-                                                    )}
-                                                </pre>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <span>{node.children[0].properties?.dataMeta}</span>
-                                            </>
-                                        )}
+                                        <div {...props}>{children}</div>
                                     </>
                                 );
-                            },
+                            } else {
+                                return <div {...props}>{children}</div>;
+                            }
+                        },
 
-                            div: ({ node, children, ...props }) => {
-                                if (node.properties.className?.includes("alert")) {
-                                    // console.log(children);
-                                    // console.log(node);
-
-                                    return (
-                                        <div {...props}>
-                                            {node.properties.className?.includes("alert-info") ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    className="stroke-current shrink-0 w-6 h-6">
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            ) : node.properties.className?.includes(
-                                                  "alert-success"
-                                              ) ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="stroke-current shrink-0 h-6 w-6"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                    />
-                                                </svg>
-                                            ) : node.properties.className?.includes(
-                                                  "alert-warning"
-                                              ) ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="stroke-current shrink-0 h-6 w-6"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                                                    />
-                                                </svg>
-                                            ) : node.properties.className?.includes(
-                                                  "alert-error"
-                                              ) ? (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    className="stroke-current shrink-0 h-6 w-6"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24">
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                    />
-                                                </svg>
-                                            ) : (
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    className="stroke-info shrink-0 w-6 h-6">
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            )}
-                                            <span>{children.props.children}</span>
-                                        </div>
-                                    );
-                                } else if (node.properties.className?.includes("python_code")) {
-                                    return (
-                                        <>
-                                            <div {...props}>{children}</div>
-                                        </>
-                                    );
-                                } else {
-                                    return <div {...props}>{children}</div>;
-                                }
-                            },
-
-                            svg: ({ node, children, ...props }) => {
-                                // console.log(node.children)
-                                // console.log(props);
-                                if (props.id.includes("remark-mermaid")) {
-                                    return (
-                                        <svg
-                                            {...props}
-                                            className={
-                                                isDarkTheme
-                                                    ? "bg-gray-400 rounded-lg mx-auto "
-                                                    : "rounded-lg mx-auto "
-                                            }>
-                                            {children}
-                                        </svg>
-                                    );
-                                } else {
-                                    return <svg {...props}> {children}</svg>;
-                                }
-                            },
-
-                            a: ({ node, ...props }) => {
-                                if (
-                                    props.children.type === "img" &&
-                                    props.href === props.children.props.src &&
-                                    props.children.props.alt === ""
-                                ) {
-                                    // console.log(props);
-                                    return <img {...props.children.props}></img>;
-                                }
-                                return <a {...props}></a>;
-                            },
-
-                            h1: ({ node, ...props }) => {
+                        svg: ({ node, children, ...props }) => {
+                            // console.log(node.children)
+                            // console.log(props);
+                            if (props.id.includes("remark-mermaid")) {
                                 return (
-                                    <h1
+                                    <svg
                                         {...props}
-                                        className={`mt-12 mb-0 border-b leading-snug ${
-                                            isDarkTheme ? "border-gray-200" : "border-gray-800"
-                                        } `}></h1>
+                                        className={
+                                            isDarkTheme
+                                                ? "bg-gray-400 rounded-lg mx-auto "
+                                                : "rounded-lg mx-auto "
+                                        }>
+                                        {children}
+                                    </svg>
                                 );
-                            },
+                            } else {
+                                return <svg {...props}> {children}</svg>;
+                            }
+                        },
 
-                            h2: ({ node, ...props }) => {
-                                return <h2 {...props} className={`mt-4 mb-3 leading-snug`}></h2>;
-                            },
-                        }}
-                    />
-                </article>
-            </div>
+                        a: ({ node, ...props }) => {
+                            if (
+                                props.children.type === "img" &&
+                                props.href === props.children.props.src &&
+                                props.children.props.alt === ""
+                            ) {
+                                // console.log(props);
+                                return <img {...props.children.props}></img>;
+                            }
+                            return <a {...props}></a>;
+                        },
+
+                        h1: ({ node, ...props }) => {
+                            return (
+                                <h1
+                                    {...props}
+                                    className={`${
+                                        node.properties.id === "contents" ? "mt-2" : "mt-12"
+                                    } mb-0 border-b leading-snug ${
+                                        isDarkTheme ? "border-gray-200" : "border-gray-800"
+                                    } `}></h1>
+                            );
+                        },
+
+                        h2: ({ node, ...props }) => {
+                            return <h2 {...props} className={`mt-4 mb-3 leading-snug`}></h2>;
+                        },
+                    }}
+                />
+            </article>
         </>
     );
 };

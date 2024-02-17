@@ -30,37 +30,34 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
   - ✅ Markdown renderer
   - ✅ Theme switch in the navigation bar
 - ✅ Code block execution
-  - ✅ Python code block (Pyodide)
-  - ✅ CPP code block
+  - ✅ Python code block (Pyodide) (OUTPUT ONLY)
+  - ✅ CPP code block (OUTPUT ONLY)
 - ✅ Generate page depending on markdown file name
 - ✅ Index page for listing all markdown files (support sub-directories)
+- ✅ General Pages components
+  - ✅ Nav_bar
+  - ✅ Footer
+  - ✅ Markdown page
+  - ✅ Frontpage
+  - ✅ 404 page
 
 <!-- <br> -->
 <!-- - ⚠️  -->
-
-<br>
-
-
-- 🚧 General Pages components
-  - 🚧 Nav_bar
-  - 🚧 Footer
-  - 🚧 Tool manual
-  - 🚧 Markdown page 
-  - 🚧 Frontpage
-  - ✅ 404 page
-
+<!-- <br> -->
+<!-- - 🚧  -->
 
 <br>
 
 - 💭 Enhance code block render (Render once and add corresponding CSS)
 - 💭 Upgrade Mermaid plugin
 - 💭 Image processing using Sharp js
+- 💭 Google log-in and features with log-in users (bookmarks, lock pages access)
 
 
 ## Legend
 | ✅ | ⚠️ | 🚧 |💭|
 |:---:|:---:|:---:|:---:|
-| Done  | Buggy  |  Working on | Brief Idea |
+| Done  | Buggy  |  Working on | Brief Idea <br> (Not likely be implemented) |
 
 ## Notes
 ### Markdown file structure
@@ -88,6 +85,28 @@ The filtering behavior was defined in `App.jsx` file which can be customized.
 
 ### CPP code block 
 The implementation of CPP worker (`src/utils/cpp_worker`) was adopted from [https://github.com/InfiniteXyy/playcode](https://github.com/InfiniteXyy/playcode).
+
+### Markdown template
+In the latest version, markdown YAML heading support has been added. The deading will define the title, date and many attributes that will be rendered. The template of the Markdown files is as follows:
+
+```md
++=+=+=+
+title: testing page
+date: "2024-02-17 01:31:48"
+exeCPP: false
+exePYTHON: false
+abstract: "This is the abstract of this individual post."
++=+=+=+
+
+# Contents
+
+
+# title
+
+other texts
+other text
+```
+
 
 ### Similar projects
 #### - [rdoc](https://github.com/jaywcjlove/rdoc)

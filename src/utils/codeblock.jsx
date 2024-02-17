@@ -64,7 +64,7 @@ function Codeblock({ langWorker, code, metaInfo, lang }) {
             {metaInfo.toLowerCase().includes("monitor") ? (
                 <>
                     {parsedData.map((item, index) => {
-                        console.log(index);
+                        // console.log(index);
                         if (item.type === "text") {
                             return <span key={index}>{item.content}</span>;
                         } else if (item.type === "image") {
@@ -79,7 +79,7 @@ function Codeblock({ langWorker, code, metaInfo, lang }) {
                 </>
             ) : (
                 <>
-                    <pre>{executeOutput}</pre>
+                    <pre className="overflow-auto" >{executeOutput}</pre>
                 </>
             )}
         </div>

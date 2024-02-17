@@ -1,3 +1,11 @@
++=+=+=+
+title: Testing page for demonstrating ALL markdown functions 
+date: "2024-02-17 01:31:48"
+exeCPP: true
+exePYTHON: true
+abstract: "This is a very meaningful page since it demonstrated all render effects."
++=+=+=+
+
 # Contents
 
 # heading test
@@ -371,17 +379,15 @@ second line
 :abbr[HTML]{title="HyperText Markup Language"}
 :::
 
-=r= Not planning to implement a filter for main{#readme } ==
-:::main{#readme }
 
-Lorem:br
-ipsum.
-
-::hr{.red}
-
-A :i[lovely] language know as :abbr[HTML]{title="HyperText Markup Language"}.
-
+:::note{.openChat}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nisi ultrices, posuere mi vel, accumsan magna. Nam ut pulvinar nisl. Vestibulum mattis vestibulum nulla, posuere mattis sem posuere a. Curabitur rutrum ut nibh non gravida. Nam convallis nulla quis nisl accumsan, non fringilla elit ultrices.
 :::
+
+:::note{.closeChat}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nisi ultrices, posuere mi vel, accumsan magna. Nam ut pulvinar nisl. Vestibulum mattis vestibulum nulla, posuere mattis sem posuere a. Curabitur rutrum ut nibh non gravida. Nam convallis nulla quis nisl accumsan, non fringilla elit ultrices.
+:::
+
 
 #### Python wrap
 
@@ -520,21 +526,23 @@ void printArray(int arr[], int size){
     int i;
     for (i = 0; i < size; i++){
         cout << "\t" << arr[i] ;
-        if (i%15 ==14){
+        if (i%10 ==9){
             cout << endl;
         }
     }
 }
 // Driver program to test above functions
 int main(){
-  int arr[] = {2, 60, 78, 88, 30, 75, 63, 6, 78, 94, 14, 40, 4,
-        86, 58, 21, 88, 1, 65, 45, 2, 94, 42, 22, 95, 79, 42, 80,
-        13, 54, 48, 40, 62, 88, 90, 88, 51, 8, 88, 61, 63, 92, 28,
-        88, 9, 73, 53, 12, 78, 39, 62, 10, 83, 95, 17, 76, 76, 26,
-        77, 38, 2, 35, 98, 44, 77, 41, 36, 96, 47, 70, 99, 10, 98,
-        52, 15, 23, 21, 64, 47, 88, 80, 4, 41, 21, 17, 19, 5, 7, 34,
-        45, 10, 18, 15, 76, 14, 42, 74, 77, 28, 38, 24, 26, 3, 25, 27,
-        18, 10, 56, 30, 40, 54, 16, 77, 54, 60, 96, 80, 13, 6, 48, 13};
+  int arr[] = {2, 60, 78, 88, 30, 75, 63, 6, 78, 94, 14, 40,
+        4, 86, 58, 21, 88, 1, 65, 45, 2, 94, 42, 22, 95, 79, 
+        42, 80, 13, 54, 48, 40, 62, 88, 90, 88, 51, 8, 88,
+        61, 63, 92, 28, 88, 9, 73, 53, 12, 78, 39, 62, 10,
+        83, 95, 17, 76, 76, 26, 77, 38, 2, 35, 98, 44, 77,
+        41, 36, 96, 47, 70, 99, 10, 98, 52, 15, 23, 21, 64,
+        47, 88, 80, 4, 41, 21, 17, 19, 5, 7, 34, 45, 10, 18,
+        15, 76, 14, 42, 74, 77, 28, 38, 24, 26, 3, 25, 27,
+        18, 10, 56, 30, 40, 54, 16, 77, 54, 60, 96, 80, 13,
+        6, 48, 13};
     int N = sizeof(arr) / sizeof(arr[0]);
     bubbleSort(arr, N);
     cout << "Sorted array:  " <<  endl;
