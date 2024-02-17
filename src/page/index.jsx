@@ -58,131 +58,123 @@ function MainHome() {
                 <h3 className="text-lg mb-4 font-bold">Languages and Tools:</h3>
                 {/* <div className="flex flex-row flex-wrap justify-center gap-4 p-3 bg-neutral-content/50 rounded-xl"> */}
                 <div
-                    className={`flex flex-row flex-wrap justify-center gap-4 p-3 rounded-xl ${
-                        isDarkTheme ? "bg-gray-300/80" : ""
-                    }`}>
-                    <img
-                        src="https://upload.wikimedia.org/wikipedia/en/e/ef/SystemVerilog_logo.png"
-                        alt="system verilog"
-                        className="h-10 "
-                    />
-                    <a href="https://www.arduino.cc/">
+                    className={`flex flex-row flex-wrap justify-center gap-4 p-3 rounded-xl`}>
+                    <div className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/en/e/ef/SystemVerilog_logo.png"
+                            alt="system verilog"
+                            className="h-10 "
+                        />
+                    </div>
+                    <a href="https://www.arduino.cc/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg"
                             alt="arduino"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.cprogramming.com/">
+                    <a href="https://www.cprogramming.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg"
                             alt="c"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.w3schools.com/cpp/">
+                    <a href="https://www.w3schools.com/cpp/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg"
                             alt="cplusplus"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.docker.com/">
+                    <a href="https://www.docker.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg"
                             alt="docker"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://reactjs.org/">
-                        <img
-                            src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg"
-                            alt="react"
-                            className="h-10 w-10"
-                        />
+                    <a href="https://reactjs.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                        <FaReact className={`h-10 w-10 ${isDarkTheme ? "fill-sky-700" : "fill-sky-400"} `}/>
                     </a>
-                    <a href="https://tailwindcss.com/">
+                    <a href="https://tailwindcss.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg"
                             alt="tailwind"
                             className="h-10 w-10"
                         />
                     </a>
-
-                    <a href="https://www.w3schools.com/css/">
+                    <a href="https://www.w3schools.com/css/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"
                             alt="css3"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.w3.org/html/">
+                    <a href="https://www.w3.org/html/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg"
                             alt="html5"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
+                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg"
                             alt="javascript"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="hexo.io/">
+                    <a href="hexo.io/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/hexoio/hexoio-icon.svg"
                             alt="hexo"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://firebase.google.com/">
+                    <a href="https://firebase.google.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg"
                             alt="firebase"
                             className="h-10 w-10"
                         />
                     </a>
-
-                    <a href="https://git-scm.com/">
+                    <a href="https://git-scm.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"
                             alt="git"
                             className="h-10 w-10"
                         />
                     </a>
-
-                    <a href="https://www.python.org">
+                    <a href="https://www.python.org" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
                             alt="python"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://pytorch.org/">
+                    <a href="https://pytorch.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg"
                             alt="pytorch"
                             className="h-10 w-10"
                         />
                     </a>
-
-                    <a href="https://scikit-learn.org/" className="flex justify-center">
+                    <a href="https://scikit-learn.org/" className={`flex justify-center p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg"
                             alt="scikit_learn"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://opencv.org/">
+                    <a href="https://opencv.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg"
                             alt="opencv"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.mathworks.com/">
+                    <a href="https://www.mathworks.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png"
                             alt="matlab"
