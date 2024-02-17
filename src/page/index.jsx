@@ -14,14 +14,18 @@ function MainHome() {
             <div className="flex flex-col">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-shrink-0 m-4 sm:my-auto ">
-                        <img className={`w-40 h-40 mx-auto rounded-2xl shadow-xl ${
-                                isDarkTheme ? "" : "shadow-slate-400" }`}
+                        <img
+                            className={`w-40 h-40 mx-auto rounded-2xl shadow-xl ${
+                                isDarkTheme ? "" : "shadow-slate-400"
+                            }`}
                             src="img/profileIcon.jpg"></img>
                     </div>
                     {/* <div className="w-full bg-pink-500 z-50 p-4"> */}
                     <div className="w-full p-4">
-                    <h1 className={`mb-2 border-b leading-snug text-center text-2xl ${
-                            isDarkTheme ? "" : "border-gray-800"}`}>
+                        <h1
+                            className={`mb-2 border-b leading-snug text-center text-2xl ${
+                                isDarkTheme ? "" : "border-gray-800"
+                            }`}>
                             Hi 👋, I'm SiraisiSatoru
                         </h1>
                         <h3 className="indent-4">
@@ -38,7 +42,7 @@ function MainHome() {
                                 </a>
                             </li>
                             <li>
-                                <span>🌱 I’m currently learning </span>
+                                <span>🌱 I'm currently learning </span>
                                 <strong>Python and C</strong>
                             </li>
                             <li>
@@ -57,124 +61,198 @@ function MainHome() {
                 </div>
                 <h3 className="text-lg mb-4 font-bold">Languages and Tools:</h3>
                 {/* <div className="flex flex-row flex-wrap justify-center gap-4 p-3 bg-neutral-content/50 rounded-xl"> */}
-                <div
-                    className={`flex flex-row flex-wrap justify-center gap-4 p-3 rounded-xl`}>
-                    <div className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                <div className={`flex flex-row flex-wrap justify-center gap-4 p-3 rounded-xl`}>
+                    <div
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/en/e/ef/SystemVerilog_logo.png"
                             alt="system verilog"
                             className="h-10 "
                         />
                     </div>
-                    <a href="https://www.arduino.cc/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.arduino.cc/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://cdn.worldvectorlogo.com/logos/arduino-1.svg"
                             alt="arduino"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.cprogramming.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.cprogramming.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg"
                             alt="c"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.w3schools.com/cpp/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.w3schools.com/cpp/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg"
                             alt="cplusplus"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.docker.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.docker.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg"
                             alt="docker"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://reactjs.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
-                        <FaReact className={`h-10 w-10 ${isDarkTheme ? "fill-sky-700" : "fill-sky-400"} `}/>
+                    <a
+                        href="https://reactjs.org/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
+                        <FaReact
+                            className={`h-10 w-10 ${
+                                isDarkTheme ? "fill-sky-700" : "fill-sky-400"
+                            } `}
+                        />
                     </a>
-                    <a href="https://tailwindcss.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://tailwindcss.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg"
                             alt="tailwind"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.w3schools.com/css/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.w3schools.com/css/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg"
                             alt="css3"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.w3.org/html/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.w3.org/html/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg"
                             alt="html5"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg"
                             alt="javascript"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="hexo.io/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="hexo.io/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/hexoio/hexoio-icon.svg"
                             alt="hexo"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://firebase.google.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://firebase.google.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg"
                             alt="firebase"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://git-scm.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://git-scm.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg"
                             alt="git"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.python.org" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.python.org"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg"
                             alt="python"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://pytorch.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://pytorch.org/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg"
                             alt="pytorch"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://scikit-learn.org/" className={`flex justify-center p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://scikit-learn.org/"
+                        className={`flex justify-center p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg"
                             alt="scikit_learn"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://opencv.org/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://opencv.org/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://www.vectorlogo.zone/logos/opencv/opencv-icon.svg"
                             alt="opencv"
                             className="h-10 w-10"
                         />
                     </a>
-                    <a href="https://www.mathworks.com/" className={`p-2 rounded-full shadow-md shadow-gray-500 ${isDarkTheme ? "bg-gray-300/80" : ""}`}>
+                    <a
+                        href="https://www.mathworks.com/"
+                        className={`p-2 rounded-full shadow-md shadow-gray-500 ${
+                            isDarkTheme ? "bg-gray-300/80" : ""
+                        }`}>
                         <img
                             src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png"
                             alt="matlab"

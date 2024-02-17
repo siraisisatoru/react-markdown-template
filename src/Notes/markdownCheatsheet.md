@@ -692,6 +692,12 @@ Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
 Rel(SystemC, customerA, "Sends e-mails to")
 ```
 
+### Embedded YouTube
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/YHGkp6HUEmo?si=pRVH12PJmg2vXdPN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eZh1mC1vPgw?si=GoT4CTHv9F13cb3m" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 # A demo of `react-markdown`
 
 ## Overview

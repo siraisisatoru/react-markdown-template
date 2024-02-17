@@ -1,11 +1,14 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { UseTheme, GetInitialTheme } from "./themeContext";
-import { FaBars, FaEllipsis, FaFlaskVial } from "react-icons/fa6";
+import { FaBars, FaFlaskVial } from "react-icons/fa6";
 import { FaGoogle, FaUserAlt, FaHome, FaRoute } from "react-icons/fa";
 import wikiLogo from "/img/logo.svg";
+import { GroupedFilesContext } from "../App";
+import SiteTreeRender from "./siteTreerender";
 
 const Nav_bar = () => {
     const { isDarkTheme, setDarkTheme } = UseTheme();
+    const groupedFiles = useContext(GroupedFilesContext);
 
     return (
         <>
@@ -40,16 +43,19 @@ const Nav_bar = () => {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/notes">
-                                        <FaRoute />
-                                        Notes index
-                                    </a>
-                                </li>
-                                <li>
                                     <a href="/test">
                                         <FaFlaskVial />
                                         Markdown function tests
                                     </a>
+                                </li>
+                                <li>
+                                    {/* <SiteTreeRender></SiteTreeRender> */}
+                                    <strong className="pointer-events-none">
+                                        <FaRoute />
+                                        Notes index
+                                    </strong>
+
+                                    <SiteTreeRender groupedFiles={groupedFiles} />
                                 </li>
                             </ul>
                         </div>
@@ -65,12 +71,15 @@ const Nav_bar = () => {
                 <div className="flex-none">
                     <div className="dropdown dropdown-hover dropdown-end">
                         <div tabIndex={0} role="button" className="btn m-1 btn-square btn-ghost">
+                            {/* <FaEllipsis /> */}
                             <FaUserAlt />
                         </div>
 
                         <ul
                             tabIndex={0}
-                            className={`dropdown-content z-[1]shadow-xl border ${isDarkTheme? "border-neutral-600":"border-neutral-300"}  bg-base-100 rounded-box w-44`}>
+                            className={`dropdown-content z-[1]shadow-xl border ${
+                                isDarkTheme ? "border-neutral-600" : "border-neutral-300"
+                            }  bg-base-100 rounded-box w-44`}>
                             <li className="m-3">
                                 <button className="btn btn-ghost w-full">
                                     <FaGoogle /> Log-in

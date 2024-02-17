@@ -99,13 +99,12 @@ const MarkdownRender = (renderProps) => {
                         } else if (node.attributes.class == "openChat") {
                             data.hProperties = h(
                                 tagName,
-                                { class: "my-2 ml-4 chat chat-start"} || {}
+                                { class: "my-2 ml-4 chat chat-start" } || {}
                             ).properties;
-
                         } else if (node.attributes.class == "closeChat") {
                             data.hProperties = h(
                                 tagName,
-                                { class: "my-2 mr-4 chat chat-end"} || {}
+                                { class: "my-2 mr-4 chat chat-end" } || {}
                             ).properties;
                         } else if (node.attributes.class == "python") {
                             // included but not used in md
@@ -381,7 +380,7 @@ const MarkdownRender = (renderProps) => {
                                     {isRun && isPython ? (
                                         <>
                                             {/* the code in this code block is python, try to render the output for it */}
-                                            <pre className="not-prose ">
+                                            <pre className="not-prose">
                                                 {loading ? (
                                                     <p>Loading Pyodide...</p>
                                                 ) : pyodideRef.current ? (
@@ -501,8 +500,13 @@ const MarkdownRender = (renderProps) => {
                                     </div>
                                 );
                             } else if (node.properties.className?.includes("chat")) {
-                                return                                     <div {...props}>
-                                <div className="chat-bubble bg-neutral-content text-neutral">{children.props.children}</div></div>
+                                return (
+                                    <div {...props}>
+                                        <div className="chat-bubble bg-neutral-content text-neutral">
+                                            {children.props.children}
+                                        </div>
+                                    </div>
+                                );
                             } else if (node.properties.className?.includes("python_code")) {
                                 return (
                                     <>
@@ -560,6 +564,24 @@ const MarkdownRender = (renderProps) => {
 
                         h2: ({ node, ...props }) => {
                             return <h2 {...props} className={`mt-4 mb-3 leading-snug`}></h2>;
+                        },
+
+                        iframe: ({ node, ...pros }) => {
+                            return pros.title.includes("YouTube") ? (
+                                <div className="mockup-window border bg-base-300 max-w-fit mx-auto my-4">
+                                    <div className="flex justify-center bg-base-200 p-2">
+                                        <iframe
+                                            width="560"
+                                            height="315"
+                                            src={pros.src}
+                                            title="YouTube video player"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen></iframe>
+                                    </div>
+                                </div>
+                            ) : (
+                                <iframe pros></iframe>
+                            );
                         },
                     }}
                 />

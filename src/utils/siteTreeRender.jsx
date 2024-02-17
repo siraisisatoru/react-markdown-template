@@ -1,3 +1,5 @@
+import { FaFolderClosed } from "react-icons/fa6";
+
 const SiteTreeRender = (renderProps) => {
     function FileItem({ files }) {
         return (
@@ -16,7 +18,10 @@ const SiteTreeRender = (renderProps) => {
             <ul className="menu">
                 {Object.entries(directory).map(([key, value]) => (
                     <li key={key}>
-                        <strong className="pointer-events-none">{key}</strong>
+                        <strong className="pointer-events-none">
+                            <FaFolderClosed />
+                            {key}
+                        </strong>
                         <FileItem files={value.files} />
                         <Directory directory={value.subdirectory} />
                     </li>
