@@ -3,24 +3,25 @@ import { ThemeProvider, UseTheme } from "../utils/themeContext";
 import Nav_bar from "../utils/nav_bar";
 import Footer from "../utils/footer";
 import { FaCheckCircle } from "react-icons/fa";
+import { FaReact } from "react-icons/fa";
 
 
 function MainHome() {
     const { isDarkTheme, setDarkTheme } = UseTheme();
 
     return (
-
         <div className=" flex flex-col max-w-[120ch] px-8 md:px-20 mx-auto mt-6 gap-4">
             <div className="flex flex-col">
                 <div className="flex flex-col sm:flex-row gap-4">
                     <div className="flex-shrink-0 m-4 sm:my-auto ">
-                        <img
-                            className="w-40 h-40 mx-auto rounded-2xl shadow-lg "
+                        <img className={`w-40 h-40 mx-auto rounded-2xl shadow-xl ${
+                                isDarkTheme ? "" : "shadow-slate-400" }`}
                             src="img/profileIcon.jpg"></img>
                     </div>
                     {/* <div className="w-full bg-pink-500 z-50 p-4"> */}
                     <div className="w-full p-4">
-                        <h1 className="mb-2 border-b leading-snug border-gray-800 text-center text-2xl">
+                    <h1 className={`mb-2 border-b leading-snug text-center text-2xl ${
+                            isDarkTheme ? "" : "border-gray-800"}`}>
                             Hi 👋, I'm SiraisiSatoru
                         </h1>
                         <h3 className="indent-4">
@@ -256,7 +257,6 @@ function MainHome() {
 function Home() {
     return (
         <>
-
             <div className="flex flex-col min-h-screen">
                 <ThemeProvider>
                     <div className="mb-6">
