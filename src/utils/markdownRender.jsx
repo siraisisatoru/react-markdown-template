@@ -540,14 +540,12 @@ const MarkdownRender = (renderProps) => {
 
                         iframe: ({ node, ...pros }) => {
                             return pros.title.includes("YouTube") ? (
-                                <div className="mockup-window border bg-base-300 max-w-fit mx-auto my-4">
+                                <div className="mockup-window border bg-base-300 max-w-full mx-4 my-4">
                                     <div className="flex justify-center bg-base-200 p-2">
                                         <iframe
-                                            width="560"
-                                            height="315"
                                             src={pros.src}
+                                            className="aspect-video w-full"
                                             title="YouTube video player"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                             allowFullScreen></iframe>
                                     </div>
                                 </div>
