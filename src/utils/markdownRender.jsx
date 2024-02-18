@@ -522,6 +522,22 @@ const MarkdownRender = (renderProps) => {
                             );
                         },
 
+                        h3: ({ node, ...props }) => {
+                            return <h3 {...props} className={`scroll-my-20`}></h3>;
+                        },
+
+                        h4: ({ node, ...props }) => {
+                            return <h4 {...props} className={`scroll-my-20`}></h4>;
+                        },
+
+                        h5: ({ node, ...props }) => {
+                            return <h5 {...props} className={`scroll-my-20`}></h5>;
+                        },
+
+                        h6: ({ node, ...props }) => {
+                            return <h6 {...props} className={`scroll-my-20`}></h6>;
+                        },
+
                         iframe: ({ node, ...pros }) => {
                             return pros.title.includes("YouTube") ? (
                                 <div className="mockup-window border bg-base-300 max-w-fit mx-auto my-4">
