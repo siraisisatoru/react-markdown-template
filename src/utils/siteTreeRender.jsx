@@ -6,7 +6,7 @@ const SiteTreeRender = (renderProps) => {
             <ul className="menu">
                 {files.map((file, index) => (
                     <li key={index}>
-                        <a href={file.url}>{file.name}</a>
+                        <a href={file.url} className="capitalize">{file.name}</a>
                     </li>
                 ))}
             </ul>

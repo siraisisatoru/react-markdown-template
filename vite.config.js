@@ -18,10 +18,6 @@ export default defineConfig(({ command, mode }) => {
                 algorithm: "gzip",
                 exclude: [/\.(br)$ /, /\.(gz)$/],
             }),
-            compression({
-                algorithm: "brotliCompress",
-                exclude: [/\.(br)$ /, /\.(gz)$/],
-            }),
         ],
         build: {
             chunkSizeWarningLimit: 50000,
