@@ -553,11 +553,9 @@ int main(){
 
 ### Mermaid
 
-=r= Render using remark-mermaidjs@4 and it utilise version 9.4.3 mermaidjs ==
+=r= Mermaid now fixed, use code block with {mermaid run} ==
 
-https://github.com/mermaid-js/mermaid/tree/release/9.4.3
-
-```mermaid
+```mermaid run
 flowchart LR
 
 A[Hard] -->|Text| B(Round)
@@ -566,7 +564,7 @@ C -->|One| D[Result 1]
 C -->|Two| E[Result 2]
 ```
 
-```md
+```mermaid run
 gitGraph
 commit
 commit
@@ -578,10 +576,9 @@ checkout main
 merge develop
 commit
 commit
-// need to fix the width problem
 ```
 
-```mermaid
+```mermaid run
 sequenceDiagram
 Alice->>John: Hello John, how are you?
 loop Healthcheck
@@ -593,8 +590,7 @@ John->>Bob: How about you?
 Bob-->>John: Jolly good!
 ```
 
-```text
-// This output correct svg but also causing warning in the following
+```mermaid run
 gantt
     section Section
     Completed    :done,    des1, 2014-01-06,2014-01-08
@@ -604,11 +600,9 @@ gantt
     Parallel 3   :         des5, after des3, 1d
     Parallel 4   :         des6, after des4, 1d
 
-// error
-React does not recognize the `transformOrigin` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `transformorigin` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
 ```
 
-```mermaid
+```mermaid run
 classDiagram
 Class01 <|-- AveryLongClass : Cool
 <<Interface>> Class01
@@ -628,7 +622,7 @@ class Class10 {
 
 ```
 
-```mermaid
+```mermaid run
 stateDiagram-v2
 [*] --> Still
 Still --> [*]
@@ -638,14 +632,14 @@ Moving --> Crash
 Crash --> [*]
 ```
 
-```mermaid
+```mermaid run
 pie
 "Dogs" : 386
 "Cats" : 85.9
 "Rats" : 15
 ```
 
-```mermaid
+```mermaid run
   journey
     title My working day
     section Go to work
@@ -657,7 +651,7 @@ pie
       Sit down: 3: Me
 ```
 
-```mermaid
+```mermaid run
 C4Context
 title System Context diagram for Internet Banking System
 

@@ -49,7 +49,6 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 <br>
 
 - 💭 Enhance code block render (Render once and add corresponding CSS)
-- 💭 Upgrade Mermaid plugin
 - 💭 Image processing using Sharp js
 - 💭 Google log-in and features with log-in users (bookmarks, lock pages access)
 

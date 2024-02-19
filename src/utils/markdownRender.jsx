@@ -10,8 +10,6 @@ import remarkToc from "remark-toc";
 import remarkEmoji from "remark-emoji";
 import remarkIns from "remark-ins";
 import remarkMarkers from "remark-flexible-markers";
-import remarkMermaid from "remark-mermaidjs";
-// monitor this to update remark-mermaidjs https://github.com/remarkjs/react-markdown/issues/680
 import remarkCollapse from "remark-collapse";
 import remarkDeflist from "remark-deflist";
 import remarkSupersub from "remark-supersub";
@@ -50,7 +48,59 @@ import {
     HiOutlineXCircle,
 } from "react-icons/hi";
 import yaml from "js-yaml";
+import mermaid from "mermaid";
 // UILT  ==================================================
+mermaid.initialize({
+    startOnLoad: true,
+    theme: "default",
+    securityLevel: "loose",
+    themeCSS: `
+    g.classGroup rect {
+      fill: #282a36;
+      stroke: #6272a4;
+    } 
+    g.classGroup text {
+      fill: #f8f8f2;
+    }
+    g.classGroup line {
+      stroke: #f8f8f2;
+      stroke-width: 0.5;
+    }
+    .classLabel .box {
+      stroke: #21222c;
+      stroke-width: 3;
+      fill: #21222c;
+      opacity: 1;
+    }
+    .classLabel .label {
+      fill: #f1fa8c;
+    }
+    .relation {
+      stroke: #ff79c6;
+      stroke-width: 1;
+    }
+    #compositionStart, #compositionEnd {
+      fill: #bd93f9;
+      stroke: #bd93f9;
+      stroke-width: 1;
+    }
+    #aggregationEnd, #aggregationStart {
+      fill: #21222c;
+      stroke: #50fa7b;
+      stroke-width: 1;
+    }
+    #dependencyStart, #dependencyEnd {
+      fill: #00bcd4;
+      stroke: #00bcd4;
+      stroke-width: 1;
+    } 
+    #extensionStart, #extensionEnd {
+      fill: #f8f8f2;
+      stroke: #f8f8f2;
+      stroke-width: 1;
+    }`,
+    fontFamily: "Fira Code",
+});
 
 const MarkdownRender = (renderProps) => {
     // >> Customise remark plugin =========================
@@ -184,6 +234,9 @@ const MarkdownRender = (renderProps) => {
             cppRef.current = cppWorkerApi; // Store the Comlink instance in the ref
         }
     }, []);
+    useEffect(() => {
+        mermaid.contentLoaded();
+    });
     // >> Setup code workers ==============================
 
     return (
@@ -225,7 +278,6 @@ const MarkdownRender = (renderProps) => {
                             },
                         ],
                         remarkUnwrapImages,
-                        remarkMermaid,
                         [remarkGfm, { singleTilde: false }],
                         [remarkCollapse, { test: "Colltest" }],
                         [remarkEmoji, { emoticon: false }],
@@ -295,140 +347,156 @@ const MarkdownRender = (renderProps) => {
                             const language = children.props.className?.replace(/language-/g, "");
                             const dataMeta = node.children[0].properties?.dataMeta;
                             const isRun = dataMeta?.match(/^(run\b.*)$/i);
+                            const isMermaid = language?.toLowerCase() == "mermaid";
                             const isPython =
                                 language?.toLowerCase() == "py" ||
                                 language?.toLowerCase() == "python";
                             const isCpp =
                                 language?.toLowerCase() == "cpp" || language?.toLowerCase() == "c";
-                            return (
-                                <>
-                                    <div className="relative overflow-x-hidden ">
-                                        <button
-                                            className="right-0 tooltip tooltip-left absolute z-40 mr-2 mt-5"
-                                            data-tip={copyTip}
-                                            onClick={async () => {
-                                                setCopyTip("Copied");
-                                                try {
-                                                    await navigator.clipboard.writeText(codeChunk);
-                                                    await new Promise((resolve) =>
-                                                        setTimeout(resolve, 500)
-                                                    );
-                                                } catch (error) {
-                                                    console.error(error.message);
-                                                }
-                                                setCopyTip(`Copy code`);
-                                            }}>
-                                            {/* <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer hover:text-blue-600" /> */}
-                                            <FaRegCopy className="h-5 w-5 cursor-pointer hover:text-blue-600" />
-                                        </button>
 
-                                        {language ? (
-                                            <span className="right-0 bottom-0 z-40 absolute mb-4 mr-2 rounded-lg p-1 text-xs uppercase text-base-300 bg-base-content/40 backdrop-blur-sm">
-                                                {language}
-                                            </span>
-                                        ) : (
-                                            <></>
-                                        )}
-                                        <pre className="not-prose ">
-                                            <SyntaxHighlighter
-                                                //
-                                                style={isDarkTheme ? vscDarkPlus : coldarkCold}
-                                                // style={vscDarkPlus}
-                                                language={language ? language : "plaintext"}
-                                                PreTag="div"
-                                                className="text-sm mockup-code "
-                                                codeTagProps={{ className: " " }}
-                                                showLineNumbers={true}
-                                                useInlineStyles={true}
-                                                lineNumberStyle={{ minWidth: "3em" }}
-                                                wrapLongLines={true}
-                                                renderer={({
-                                                    rows,
-                                                    stylesheet,
-                                                    useInlineStyles,
-                                                }) => {
-                                                    return rows.map((row, index) => {
-                                                        const children = row.children;
-                                                        const lineNumberElement = children?.shift();
-
-                                                        /**
-                                                         * We will take current structure of the rows and rebuild it
-                                                         * according to the suggestion here https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/376#issuecomment-1246115899
-                                                         */
-                                                        if (lineNumberElement) {
-                                                            row.children = [
-                                                                lineNumberElement,
-                                                                {
-                                                                    children,
-                                                                    properties: {
-                                                                        className: [],
-                                                                    },
-                                                                    tagName: "span",
-                                                                    type: "element",
-                                                                },
-                                                            ];
-                                                        }
-
-                                                        return createElement({
-                                                            node: row,
-                                                            stylesheet,
-                                                            useInlineStyles,
-                                                            key: index,
-                                                        });
-                                                    });
+                            if (isRun && isMermaid) {
+                                return (
+                                    <>
+                                        <div>
+                                            {/* <MermaidRender chart={codeChunk} /> */}
+                                            <div className="mermaid !max-h-min">{codeChunk}</div>
+                                        </div>
+                                    </>
+                                );
+                            } else {
+                                return (
+                                    <>
+                                        <div className="relative overflow-x-hidden ">
+                                            <button
+                                                className="right-0 tooltip tooltip-left absolute z-40 mr-2 mt-5"
+                                                data-tip={copyTip}
+                                                onClick={async () => {
+                                                    setCopyTip("Copied");
+                                                    try {
+                                                        await navigator.clipboard.writeText(
+                                                            codeChunk
+                                                        );
+                                                        await new Promise((resolve) =>
+                                                            setTimeout(resolve, 500)
+                                                        );
+                                                    } catch (error) {
+                                                        console.error(error.message);
+                                                    }
+                                                    setCopyTip(`Copy code`);
                                                 }}>
-                                                {String(codeChunk).replace(/\n$/, "")}
-                                            </SyntaxHighlighter>
-                                        </pre>
-                                    </div>
+                                                {/* <DocumentDuplicateIcon className="h-5 w-5 cursor-pointer hover:text-blue-600" /> */}
+                                                <FaRegCopy className="h-5 w-5 cursor-pointer hover:text-blue-600" />
+                                            </button>
 
-                                    {isRun && isPython ? (
-                                        <>
-                                            {/* the code in this code block is python, try to render the output for it */}
-                                            <pre className="not-prose">
-                                                {loading ? (
-                                                    <p>Loading Pyodide...</p>
-                                                ) : pyodideRef.current ? (
-                                                    <div>
-                                                        <Codeblock
-                                                            langWorker={pyodideRef.current}
-                                                            code={codeChunk}
-                                                            metaInfo={dataMeta}
-                                                            lang={"py"}
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <></>
-                                                )}
+                                            {language ? (
+                                                <span className="right-0 bottom-0 z-40 absolute mb-4 mr-2 rounded-lg p-1 text-xs uppercase text-base-300 bg-base-content/40 backdrop-blur-sm">
+                                                    {language}
+                                                </span>
+                                            ) : (
+                                                <></>
+                                            )}
+                                            <pre className="not-prose ">
+                                                <SyntaxHighlighter
+                                                    //
+                                                    style={isDarkTheme ? vscDarkPlus : coldarkCold}
+                                                    // style={vscDarkPlus}
+                                                    language={language ? language : "plaintext"}
+                                                    PreTag="div"
+                                                    className="text-sm mockup-code "
+                                                    codeTagProps={{ className: " " }}
+                                                    showLineNumbers={true}
+                                                    useInlineStyles={true}
+                                                    lineNumberStyle={{ minWidth: "3em" }}
+                                                    wrapLongLines={true}
+                                                    renderer={({
+                                                        rows,
+                                                        stylesheet,
+                                                        useInlineStyles,
+                                                    }) => {
+                                                        return rows.map((row, index) => {
+                                                            const children = row.children;
+                                                            const lineNumberElement =
+                                                                children?.shift();
+
+                                                            /**
+                                                             * We will take current structure of the rows and rebuild it
+                                                             * according to the suggestion here https://github.com/react-syntax-highlighter/react-syntax-highlighter/issues/376#issuecomment-1246115899
+                                                             */
+                                                            if (lineNumberElement) {
+                                                                row.children = [
+                                                                    lineNumberElement,
+                                                                    {
+                                                                        children,
+                                                                        properties: {
+                                                                            className: [],
+                                                                        },
+                                                                        tagName: "span",
+                                                                        type: "element",
+                                                                    },
+                                                                ];
+                                                            }
+
+                                                            return createElement({
+                                                                node: row,
+                                                                stylesheet,
+                                                                useInlineStyles,
+                                                                key: index,
+                                                            });
+                                                        });
+                                                    }}>
+                                                    {String(codeChunk).replace(/\n$/, "")}
+                                                </SyntaxHighlighter>
                                             </pre>
-                                        </>
-                                    ) : isRun && isCpp ? (
-                                        <>
-                                            {/* the code in this code block is Cpp, try to render the output for it */}
-                                            <pre className="not-prose">
-                                                {loading ? (
-                                                    <p>Loading Clang...</p>
-                                                ) : cppRef.current ? (
-                                                    <div>
-                                                        <Codeblock
-                                                            langWorker={cppRef.current}
-                                                            code={codeChunk}
-                                                            metaInfo={dataMeta}
-                                                            lang={"cpp"}
-                                                        />
-                                                    </div>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </pre>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <span>{node.children[0].properties?.dataMeta}</span>
-                                        </>
-                                    )}
-                                </>
-                            );
+                                        </div>
+
+                                        {isRun && isPython ? (
+                                            <>
+                                                {/* the code in this code block is python, try to render the output for it */}
+                                                <pre className="not-prose">
+                                                    {loading ? (
+                                                        <p>Loading Pyodide...</p>
+                                                    ) : pyodideRef.current ? (
+                                                        <div>
+                                                            <Codeblock
+                                                                langWorker={pyodideRef.current}
+                                                                code={codeChunk}
+                                                                metaInfo={dataMeta}
+                                                                lang={"py"}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <></>
+                                                    )}
+                                                </pre>
+                                            </>
+                                        ) : isRun && isCpp ? (
+                                            <>
+                                                {/* the code in this code block is Cpp, try to render the output for it */}
+                                                <pre className="not-prose">
+                                                    {loading ? (
+                                                        <p>Loading Clang...</p>
+                                                    ) : cppRef.current ? (
+                                                        <div>
+                                                            <Codeblock
+                                                                langWorker={cppRef.current}
+                                                                code={codeChunk}
+                                                                metaInfo={dataMeta}
+                                                                lang={"cpp"}
+                                                            />
+                                                        </div>
+                                                    ) : (
+                                                        <></>
+                                                    )}
+                                                </pre>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <span>{node.children[0].properties?.dataMeta}</span>
+                                            </>
+                                        )}
+                                    </>
+                                );
+                            }
                         },
 
                         div: ({ node, children, ...props }) => {
