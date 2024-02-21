@@ -555,6 +555,7 @@ int main(){
 
 =r= Mermaid now fixed, use code block with {mermaid run} ==
 
+
 ```mermaid run
 flowchart LR
 
@@ -599,7 +600,23 @@ gantt
     Parallel 2   :         des4, after des1, 1d
     Parallel 3   :         des5, after des3, 1d
     Parallel 4   :         des6, after des4, 1d
+```
 
+```mermaid run wide
+gantt
+    title Git Issues - days since last update
+    dateFormat X
+    axisFormat %s
+    section Issue19062
+    71   : 0, 71
+    section Issue19401
+    36   : 0, 36
+    section Issue193
+    34   : 0, 34
+    section Issue7441
+    9    : 0, 9
+    section Issue1300
+    5    : 0, 5
 ```
 
 ```mermaid run
@@ -685,6 +702,7 @@ BiRel(SystemAA, SystemE, "Uses")
 Rel(SystemAA, SystemC, "Sends e-mails", "SMTP")
 Rel(SystemC, customerA, "Sends e-mails to")
 ```
+
 
 ### Embedded YouTube
 

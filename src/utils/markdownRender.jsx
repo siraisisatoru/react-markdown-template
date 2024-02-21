@@ -54,6 +54,12 @@ mermaid.initialize({
     startOnLoad: true,
     theme: "default",
     securityLevel: "loose",
+    gantt: {
+        useMaxWidth: false,
+        barHeight: 20,
+        useWidth: 800,
+        useHeight: 400,
+    },
     themeCSS: `
     g.classGroup rect {
       fill: #282a36;
@@ -347,19 +353,26 @@ const MarkdownRender = (renderProps) => {
                             const language = children.props.className?.replace(/language-/g, "");
                             const dataMeta = node.children[0].properties?.dataMeta;
                             const isRun = dataMeta?.match(/^(run\b.*)$/i);
-                            const isMermaid = language?.toLowerCase() == "mermaid";
+                            const isMermaid = language?.match(/(mermaid\b.*)/i);
                             const isPython =
-                                language?.toLowerCase() == "py" ||
-                                language?.toLowerCase() == "python";
-                            const isCpp =
-                                language?.toLowerCase() == "cpp" || language?.toLowerCase() == "c";
+                                language?.match(/(py\b.*)/i) || language?.match(/(python\b.*)/i);
+                            const isCpp = language?.match(/(cpp\b.*)/i);
 
                             if (isRun && isMermaid) {
+                                const chartCode =
+                                    (isDarkTheme
+                                        ? `%%{init: {'theme':'dark'}}%%\n`
+                                        : `%%{init: {'theme':'default'}}%%\n `) + codeChunk;
+                                const isWide = dataMeta?.match(/(wide\b.*)$/i);
                                 return (
                                     <>
-                                        <div>
-                                            {/* <MermaidRender chart={codeChunk} /> */}
-                                            <div className="mermaid !max-h-min">{codeChunk}</div>
+                                        <div className="not-prose overflow-x-auto">
+                                            <div
+                                                className={`mermaid flex justify-center items-center mx-auto ${
+                                                    isWide ? "w-[800px] sm:w-full" : "w-full"
+                                                }`}>
+                                                {chartCode}
+                                            </div>
                                         </div>
                                     </>
                                 );
