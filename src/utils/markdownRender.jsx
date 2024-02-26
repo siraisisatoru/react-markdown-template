@@ -631,7 +631,7 @@ const MarkdownRender = (renderProps) => {
                                     </div>
                                 </div>
                             ) : (
-                                <iframe pros></iframe>
+                                <iframe {...pros}></iframe>
                             );
                         },
                     }}
