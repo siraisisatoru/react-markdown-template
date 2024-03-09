@@ -223,7 +223,7 @@ const MarkdownRender = (renderProps) => {
     const pyodideRef = useRef(null); // Ref to store the Comlink instance
     const cppRef = useRef(null); // Ref to store the Comlink instance
     const { loading } = useAsync(async () => {
-        if (jsonData.exeCPP) {
+        if (jsonData.exePYTHON) {
             const py_worker = new Worker(new URL("./js/py_worker.js", import.meta.url), {
                 type: "module",
             });
@@ -232,7 +232,7 @@ const MarkdownRender = (renderProps) => {
             pyodideRef.current = pyodideWorker; // Store the Comlink instance in the ref
         }
 
-        if (jsonData.exePYTHON) {
+        if (jsonData.exeCPP) {
             const cpp_worker = new Worker(new URL("./cpp_worker/cpp_worker.js", import.meta.url), {
                 type: "module",
             });

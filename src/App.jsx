@@ -9,6 +9,8 @@ import TestPage from "./page/test";
 import MarkdownPage from "./page/markdownPage";
 import NoteIndex from "./page/noteIndex";
 
+import ReactPyClone from "./page/reactpy_clone";
+
 export const GroupedFilesContext = createContext();
 
 function App() {
@@ -73,6 +75,7 @@ function App() {
                         />
                     ))}
 
+                    <Route exact path="reactpy_clone" element={<ReactPyClone/>}/>
                     <Route exact path="notes" element={<NoteIndex groupedFiles={groupedFiles} />} />
                     <Route path="/*" element={<NoMatch />} />
                 </Routes>
