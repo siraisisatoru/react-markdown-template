@@ -43,8 +43,13 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 
 <!-- <br> -->
 <!-- - ⚠️  -->
-<!-- <br> -->
-<!-- - 🚧  -->
+<br>
+
+- 🚧 Implement fuzzy search ([`microfuzz`]("https://github.com/Nozbe/microfuzz"))
+
+- 🚧 Transfer from Javascript to Typescript
+
+
 
 <br>
 
