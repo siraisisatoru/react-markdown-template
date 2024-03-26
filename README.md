@@ -47,8 +47,6 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
 <!-- <br> -->
 <!-- - 🚧 -->
 
- Transfer from Javascript to Typescript
-
 
 <br>
 
