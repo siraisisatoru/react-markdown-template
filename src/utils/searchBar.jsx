@@ -138,7 +138,7 @@ const SearchBar = (renderProps) => {
                                                 <th className="bg-gradient-to-tr from-base-300 to-bafrom-base-300/5 rounded-md shadow-inner shadow-slate-300 ">
                                                     <a
                                                         href={result.item.url}
-                                                        className="link text-lg capitalize">
+                                                        className="link text-lg capitalize break-words whitespace-normal">
                                                         {result.item.filename}
                                                     </a>
                                                 </th>
