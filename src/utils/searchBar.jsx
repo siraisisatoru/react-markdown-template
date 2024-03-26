@@ -106,9 +106,12 @@ const SearchBar = (renderProps) => {
                         <h3 className="my-2 font-bold text-lg text-blue-500">Searching ... </h3>
 
                         <div className="dropdown dropdown-hover dropdown-opven dropdown-bottom sm:dropdown-right flex sm:flex-none justify-center items-center">
-                            <button className="m-4">
+                            <div
+                                tabIndex={0}
+                                role="button"
+                                className="btn btn-sm sm:btn-md m-1 btn-square btn-ghost">
                                 <HiOutlineInformationCircle />
-                            </button>
+                            </div>
                             <div
                                 tabIndex={0}
                                 className=" dropdown-content z-50 p-4 shadow-[0_0px_20px] shadow-slate-500 bg-base-100 rounded-lg w-80 max-h-64 overflow-auto">
