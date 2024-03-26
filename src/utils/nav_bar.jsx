@@ -3,12 +3,13 @@ import { UseTheme, GetInitialTheme } from "./themeContext";
 import { FaBars, FaFlaskVial } from "react-icons/fa6";
 import { FaGoogle, FaUserAlt, FaHome, FaRoute } from "react-icons/fa";
 import wikiLogo from "/img/logo.svg";
-import { GroupedFilesContext } from "../App";
+import { FullFilesContext } from "../App";
 import SiteTreeRender from "./siteTreerender";
+import SearchBar from "./searchBar";
 
 const Nav_bar = () => {
     const { isDarkTheme, setDarkTheme } = UseTheme();
-    const groupedFiles = useContext(GroupedFilesContext);
+    const { groupedFiles, searchList } = useContext(FullFilesContext);
 
     return (
         <>
@@ -31,8 +32,14 @@ const Nav_bar = () => {
                                 className="drawer-overlay"></label>
                             <ul className="menu pt-8 p-4 w-[16rem] sm:w-80 gap-4  min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
-                                <a className="btn btn-ghost gap-1 sm:gap-4 hover:bg-transparent text-lg sm:text-xl my-8" href="/">
-                                    <img src={wikiLogo} alt="react-markdown-template" className="h-7 sm:h-10" />
+                                <a
+                                    className="btn btn-ghost gap-1 sm:gap-4 hover:bg-transparent text-lg sm:text-xl my-8"
+                                    href="/">
+                                    <img
+                                        src={wikiLogo}
+                                        alt="react-markdown-template"
+                                        className="h-7 sm:h-10"
+                                    />
                                     <p>react markdown template</p>
                                 </a>
 
@@ -62,15 +69,21 @@ const Nav_bar = () => {
                     </div>
                 </div>
                 <div className="flex flex-1">
-                    <a className="btn btn-ghost gap-4 hover:bg-transparent text-xl" href="/">
-                    <img src={wikiLogo} alt="react-markdown-template" className="h-10" />
+                    <a
+                        className="btn btn-ghost gap-4 hover:bg-transparent text-lg sm:text-xl"
+                        href="/">
+                        <img src={wikiLogo} alt="react-markdown-template" className="h-10" />
                         react markdown template
                     </a>
                 </div>
 
                 <div className="flex-none">
+                    <SearchBar searchList={searchList} />
                     <div className="dropdown dropdown-hover dropdown-end">
-                        <div tabIndex={0} role="button" className="btn m-1 btn-square btn-ghost">
+                        <div
+                            tabIndex={0}
+                            role="button"
+                            className="btn btn-sm sm:btn-md m-1 btn-square btn-ghost">
                             {/* <FaEllipsis /> */}
                             <FaUserAlt />
                         </div>

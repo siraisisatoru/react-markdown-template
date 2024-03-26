@@ -1,6 +1,6 @@
 import "./App.css";
 
-import React, {createContext } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./page/index";
 import NoMatch from "./page/404";
@@ -11,12 +11,19 @@ import NoteIndex from "./page/noteIndex";
 
 import ReactPyClone from "./page/reactpy_clone";
 
-export const GroupedFilesContext = createContext();
+import { GetPlainText } from "./utils/markdownRender";
+
+export const FullFilesContext = createContext();
 
 function App() {
     const noteBase = "Notes"; // modify this to change base folder stores markdown files
 
     const modules = import.meta.glob("./**/*.md", { query: "?raw", eager: true }); // get all md files within noteBase directory
+
+    const excludedFiles = ["markdownCheatsheet.md"]; // Array containing strings to exclude
+    const excludedDirectories = ["Projects", "Website page"]; // Array containing excluded directories
+    const [searchList, setSearchList] = useState([]);
+
     const notesList = Object.keys(modules).filter(
         (filePath) =>
             filePath.startsWith(`./${noteBase}/`) && !filePath.endsWith("markdownCheatsheet.md")
@@ -58,8 +65,41 @@ function App() {
         groupedFiles = addElement(groupedFiles, directories, filename, url);
     });
 
+    /**
+     * This useEffect cause about a second delay when open the page depending on the platform.
+     * Optimization is needed.
+     */
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const filteredList = await Promise.all(
+                Object.entries(modules)
+                    .filter(
+                        ([filePath, content]) =>
+                            filePath.startsWith(`./${noteBase}/`) &&
+                            !excludedFiles.some((excluded) => filePath.endsWith(excluded)) &&
+                            excludedDirectories.every((dir) => !filePath.includes(`/${dir}/`))
+                    )
+                    .map(async ([filePath, content]) => {
+                        const { directories, filename, url } = extractInfo(filePath);
+
+                        return {
+                            key: filePath,
+                            url: url,
+                            filename: filename,
+                            content: await GetPlainText(content.default),
+                        };
+                    })
+            );
+
+            setSearchList(filteredList);
+        };
+
+        fetchData();
+    }, []);
+
     return (
-        <GroupedFilesContext.Provider value={groupedFiles}>
+        <FullFilesContext.Provider value={{ groupedFiles: groupedFiles, searchList: searchList }}>
             <Router>
                 <Routes>
                     <Route exact path="/" element={<Home />} />
@@ -75,12 +115,12 @@ function App() {
                         />
                     ))}
 
-                    <Route exact path="reactpy_clone" element={<ReactPyClone/>}/>
+                    <Route exact path="reactpy_clone" element={<ReactPyClone />} />
                     <Route exact path="notes" element={<NoteIndex groupedFiles={groupedFiles} />} />
                     <Route path="/*" element={<NoMatch />} />
                 </Routes>
             </Router>
-        </GroupedFilesContext.Provider>
+        </FullFilesContext.Provider>
     );
 }
 export default App;

@@ -5,6 +5,9 @@ import { UseTheme } from "./themeContext";
 // MARKDOWN ===============================================
 import ReactMarkdown from "react-markdown";
 
+import { remark } from "remark";
+import strip from "strip-markdown";
+
 import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
 import remarkEmoji from "remark-emoji";
@@ -640,5 +643,20 @@ const MarkdownRender = (renderProps) => {
         </>
     );
 };
+
+export async function GetPlainText(mdText) {
+    return String(
+        await remark()
+            .use(remarkGfm)
+            .use(remarkFrontmatter, [{ type: "yaml", fence: "+=+=+=+" }])
+            .use(remarkMarkers)
+            .use(remarkDirective)
+            .use(strip, {
+                remove: ["containerDirective", "leafDirective", "textDirective", "html", "math"], // extend the list to add types being removed.
+            })
+            .process(mdText)
+    );
+}
+
 
 export default MarkdownRender;

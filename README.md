@@ -40,19 +40,19 @@ The under-developing demo is hosted on Google Firebase and can be accessed here 
   - ✅ Markdown page
   - ✅ Frontpage
   - ✅ 404 page
+- ✅ Implement fuzzy search (`fuse.js`)
 
 <!-- <br> -->
 <!-- - ⚠️  -->
-<br>
+<!-- <br> -->
+<!-- - 🚧 -->
 
-- 🚧 Implement fuzzy search ([`microfuzz`]("https://github.com/Nozbe/microfuzz"))
-
-- 🚧 Transfer from Javascript to Typescript
-
+ Transfer from Javascript to Typescript
 
 
 <br>
 
+- 💭 Transfer from Javascript to Typescript
 - 💭 Enhance code block render (Render once and add corresponding CSS)
 - 💭 Image processing using Sharp js
 - 💭 Google log-in and features with log-in users (bookmarks, lock pages access)
@@ -111,6 +111,14 @@ other texts
 other text
 ```
 
+
+### Configure search contents
+Modify the following two parameters in `App.jsx` to filter out the files and directories for search.
+
+```jsx
+const excludedFiles = ["markdownCheatsheet.md"]; // Array containing strings to exclude
+const excludedDirectories = ["Projects", "Website page"]; // Array containing excluded directories
+```
 
 ### Similar projects
 #### - [rdoc](https://github.com/jaywcjlove/rdoc)
