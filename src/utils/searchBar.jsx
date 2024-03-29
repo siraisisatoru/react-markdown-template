@@ -73,10 +73,7 @@ const SearchBar = (renderProps) => {
         };
 
         const fuse = new Fuse(renderProps.searchList, fuseOptions);
-        let result = fuse
-            .search(`${text ? `'"` + text + `"` : ""}`)
-            .reverse()
-            .slice(0, 10);
+        let result = fuse.search(`${text ? `'"` + text + `"` : ""}`).reverse();
 
         result.forEach((resultItem) => {
             highlighter(resultItem);
@@ -159,7 +156,13 @@ const SearchBar = (renderProps) => {
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        <tbody className="h-[1rem]"></tbody>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <p className="h-[1rem]"></p>
+                                                </td>
+                                            </tr>
+                                        </tbody>{" "}
                                     </React.Fragment>
                                 ))}
                             </table>
