@@ -7,13 +7,17 @@ export default {
     plugins: [require("@tailwindcss/typography"), require("daisyui")],
 
     daisyui: {
-        themes: {
-            light: {
-                ...require("daisyui/src/theming/themes")["emerald"],
+        themes: [
+            {
+                light: {
+                    ...require("daisyui/src/theming/themes")["emerald"],
+                },
             },
-            dark: {
-                ...require("daisyui/src/theming/themes")["dim"],
+            {
+                dark: {
+                    ...require("daisyui/src/theming/themes")["dim"],
+                },
             },
-        },
+        ],
     },
 };
