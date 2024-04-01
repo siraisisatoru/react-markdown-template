@@ -68,12 +68,12 @@ const Nav_bar = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-1">
+                <div className="flex-1 ">
                     <a
-                        className="btn btn-ghost gap-4 hover:bg-transparent text-lg sm:text-xl"
+                        className="btn btn-ghost gap-4 hover:bg-transparent text-lg sm:text-xl max-w-full text-wrap flex-nowrap my-2"
                         href="/">
-                        <img src={wikiLogo} alt="react-markdown-template" className="h-10" />
-                        react markdown template
+                        <img src={wikiLogo} alt="react-markdown-template" className="h-7 sm:h-10" />
+                        <span>react markdown template</span>
                     </a>
                 </div>
 
