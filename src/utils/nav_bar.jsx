@@ -30,7 +30,7 @@ const Nav_bar = () => {
                                 htmlFor="my-drawer"
                                 aria-label="close sidebar"
                                 className="drawer-overlay"></label>
-                            <ul className="menu pt-8 p-4 w-[16rem] sm:w-80 gap-4  min-h-full bg-base-200 text-base-content">
+                            <ul className="menu pt-8 p-4 w-[18rem] sm:w-80 gap-4  min-h-full bg-base-200 text-base-content">
                                 {/* Sidebar content here */}
                                 <a
                                     className="btn btn-ghost gap-1 sm:gap-4 hover:bg-transparent text-lg sm:text-xl my-8"
