@@ -204,6 +204,19 @@ With a reference later in the document defining the URL location:
 
 [id]: https://octodex.github.com/images/dojocat.jpg "The Dojocat"
 
+### Image classes modification
+
+```md
+![](/img/IMG_2147.JPG#not-prose#max-h-60#mx-auto)
+
+![](/img/IMG_2147.JPG#not-prose#max-h-52#mx-auto#skew-y-12)
+```
+
+![](/img/IMG_2147.JPG#not-prose#max-h-60#mx-auto)
+
+![](/img/IMG_2147.JPG#not-prose#max-h-52#mx-auto#skew-y-12)
+
+
 ## Plugins
 
 ### Emojies

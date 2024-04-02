@@ -190,6 +190,16 @@ const MarkdownRender = (renderProps) => {
                             data.hProperties.class = ["bg-sky-200", "rounded-lg"];
                         }
                     }
+                } else if (node.type === "image") {
+                    const src = node.url;
+                    const classRegex = /#([a-zA-Z0-9\-_]+)/g;
+                    const classMatch = src.match(classRegex);
+                    if (classMatch) {
+                        const classNames = classMatch.map((match) => match.slice(1)).join(" ");
+                        if (!node.data) node.data = {};
+                        if (!node.data.hProperties) node.data.hProperties = {};
+                        node.data.hProperties.className = classNames;
+                    }
                 }
             });
         };
@@ -586,6 +596,65 @@ const MarkdownRender = (renderProps) => {
                             return <a {...props}></a>;
                         },
 
+                        img: ({ node, ...props }) => {
+                            const imgProp = node.properties.src.split("#");
+                            // console.log(imgProp);
+
+                            if (imgProp.length == 1) {
+                                return <img src={imgProp[0]} {...props}></img>;
+                            } else if (imgProp[1] == "center") {
+                                return <img src={imgProp[0]} className="mx-auto"></img>;
+                            } else if (imgProp[1] == "small-inline") {
+                                return (
+                                    <>
+                                        <div className="inline-block max-w-32 max-h-32">
+                                            <img
+                                                src={imgProp[0]}
+                                                className="not-prose max-h-full max-w-full"></img>
+                                        </div>
+                                    </>
+                                );
+                            } else if (imgProp[1] == "left") {
+                                return (
+                                    <>
+                                        <div className="float-left w-1/2 sm:w-72 my-auto ">
+                                            <img src={imgProp[0]} className="w-full"></img>
+                                        </div>
+                                    </>
+                                );
+                            } else if (imgProp[1] == "right") {
+                                return (
+                                    <>
+                                        <div className="float-right w-1/2 sm:w-72 my-auto">
+                                            <img src={imgProp[0]} className="w-full"></img>
+                                        </div>
+                                    </>
+                                );
+                            } else if (imgProp[1] == "invert") {
+                                return (
+                                    <img
+                                        src={imgProp[0]}
+                                        className={`${isDarkTheme ? "invert" : ""}`}></img>
+                                );
+                            } else {
+                                console.log(imgProp);
+                                return (
+                                    <>
+                                        <img {...props} />
+                                        {/* <div className="not-prose overflow-scroll">
+                                            <img
+                                                src={imgProp[0]}
+                                                className={` ${imgProp[1]
+                                                    .replaceAll(",", " ")
+                                                    .replaceAll("%5B", "[")
+                                                    .replaceAll("%5D", "]")} max-w-none `}
+                                            />
+                                        </div> */}
+                                    </>
+                                );
+                            }
+                        },
+
                         h1: ({ node, ...props }) => {
                             return (
                                 <h1
@@ -657,6 +726,5 @@ export async function GetPlainText(mdText) {
             .process(mdText)
     );
 }
-
 
 export default MarkdownRender;
