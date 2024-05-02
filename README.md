@@ -12,6 +12,11 @@ To extend the idea of rendering markdown files in React which may be useful in s
 
 This project was built on Vite and Reactjs. The page was decorated with Tailwind CSS and Daisyui.
 
+## Update on this project
+Hello, hello, hello! Thank you for checking this repository out. As you may have noticed some performance-wise issues such as duplicate program execution and re-rendering when theme changes. To tackle those issues and stick with ReactJS, I moved on and implemented a huge amount of changes to convert this project into NextJs version. Now the project can be accessed in this repo: [next-markdown-template](https://github.com/siraisisatoru/next-markdown-template). 
+
+This repository may not have further commits from me unless there are some significant issues. Please follow along with the NextJs version. Public contribution is always welcome.
+
 # Live Demo
 The under-developing demo is hosted on Google Firebase and can be accessed here [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
 
