@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "../utils/themeContext";
 import Nav_bar from "../utils/nav_bar";
 import Footer from "../utils/footer";
-import SiteTreeRender from "../utils/siteTreerender";
+import SiteTreeRender from "../utils/siteTreeRender";
 
 function NoteIndex(renderProps) {
     return (
