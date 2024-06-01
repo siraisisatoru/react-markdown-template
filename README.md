@@ -1,8 +1,6 @@
 # react-markdown-template
+
 This a customized implementation of markdown renderer utilizing remark plugins, rehype plugins and pyodide in react framework.
-
-
-
 
 # Purpose of this template
 
@@ -13,60 +11,61 @@ To extend the idea of rendering markdown files in React which may be useful in s
 This project was built on Vite and Reactjs. The page was decorated with Tailwind CSS and Daisyui.
 
 ## Update on this project
-Hello, hello, hello! Thank you for checking this repository out. As you may have noticed some performance-wise issues such as duplicate program execution and re-rendering when theme changes. To tackle those issues and stick with ReactJS, I moved on and implemented a huge amount of changes to convert this project into NextJs version. Now the project can be accessed in this repo: [next-markdown-template](https://github.com/siraisisatoru/next-markdown-template). 
+
+Hello, hello, hello! Thank you for checking this repository out. As you may have noticed some performance-wise issues such as duplicate program execution and re-rendering when theme changes. To tackle those issues and stick with ReactJS, I moved on and implemented a huge amount of changes to convert this project into NextJs version. Now the project can be accessed in this repo: [next-markdown-template](https://github.com/siraisisatoru/next-markdown-template).
 
 This repository may not have further commits from me unless there are some significant issues. Please follow along with the NextJs version. Public contribution is always welcome.
 
 # Live Demo
-The under-developing demo is hosted on Google Firebase and can be accessed here [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
 
-- [x] Frontpage [https://siraisinotes-demo.web.app/](https://siraisinotes-demo.web.app/)
-- [x] Markdown render samples [https://siraisinotes-demo.web.app/test](https://siraisinotes-demo.web.app/test)
-- [x] Page from markdown files [https://siraisinotes-demo.web.app/coding_notes/algorithm_c](https://siraisinotes-demo.web.app/coding_notes/algorithm_c) and [https://siraisinotes-demo.web.app/coding_notes/python](https://siraisinotes-demo.web.app/coding_notes/python)
-- [x] Index page for markdown pages [https://siraisinotes-demo.web.app/notes](https://siraisinotes-demo.web.app/notes)
+The under-developing demo is hosted on Google Firebase and can be accessed here [https://react-markdown-demo.vercel.app/](https://react-markdown-demo.vercel.app/)
 
+-   [x] Frontpage [https://react-markdown-demo.vercel.app/](https://react-markdown-demo.vercel.app/)
+-   [x] Markdown render samples [https://react-markdown-demo.vercel.app/test](https://react-markdown-demo.vercel.app/test)
+-   [x] Page from markdown files [https://react-markdown-demo.vercel.app/coding_notes/algorithm_c](https://react-markdown-demo.vercel.app/coding_notes/algorithm_c) and [https://react-markdown-demo.vercel.app/coding_notes/python_tutorials/python](https://react-markdown-demo.vercel.app/coding_notes/python_tutorials/python)
+-   [x] Index page for markdown pages [https://react-markdown-demo.vercel.app/notes](https://react-markdown-demo.vercel.app/notes)
 
 # Supported features
 
-- ✅ Dark theme, Light theme and follow OS theme switch
-- ✅ Read markdown files
-- ✅ Render markdown (see the render results)
-- ✅ Modularise markdown test page into react components
-  - ✅ Markdown renderer
-  - ✅ Theme switch in the navigation bar
-- ✅ Code block execution
-  - ✅ Python code block (Pyodide) (OUTPUT ONLY)
-  - ✅ CPP code block (OUTPUT ONLY)
-- ✅ Generate page depending on markdown file name
-- ✅ Index page for listing all markdown files (support sub-directories)
-- ✅ General Pages components
-  - ✅ Nav_bar
-  - ✅ Footer
-  - ✅ Markdown page
-  - ✅ Frontpage
-  - ✅ 404 page
-- ✅ Implement fuzzy search (`fuse.js`)
+-   ✅ Dark theme, Light theme and follow OS theme switch
+-   ✅ Read markdown files
+-   ✅ Render markdown (see the render results)
+-   ✅ Modularise markdown test page into react components
+    -   ✅ Markdown renderer
+    -   ✅ Theme switch in the navigation bar
+-   ✅ Code block execution
+    -   ✅ Python code block (Pyodide) (OUTPUT ONLY)
+    -   ✅ CPP code block (OUTPUT ONLY)
+-   ✅ Generate page depending on markdown file name
+-   ✅ Index page for listing all markdown files (support sub-directories)
+-   ✅ General Pages components
+    -   ✅ Nav_bar
+    -   ✅ Footer
+    -   ✅ Markdown page
+    -   ✅ Frontpage
+    -   ✅ 404 page
+-   ✅ Implement fuzzy search (`fuse.js`)
 
 <!-- <br> -->
 <!-- - ⚠️  -->
 <!-- <br> -->
 <!-- - 🚧 -->
 
-
 <br>
 
-- 💭 Transfer from Javascript to Typescript
-- 💭 Enhance code block render (Render once and add corresponding CSS)
-- 💭 Image processing using Sharp js
-- 💭 Google log-in and features with log-in users (bookmarks, lock pages access)
-
+-   💭 Transfer from Javascript to Typescript
+-   💭 Enhance code block render (Render once and add corresponding CSS)
+-   💭 Image processing using Sharp js
+-   💭 Google log-in and features with log-in users (bookmarks, lock pages access)
 
 ## Legend
-| ✅ | ⚠️ | 🚧 |💭|
-|:---:|:---:|:---:|:---:|
-| Done  | Buggy  |  Working on | Brief Idea <br> (Not likely be implemented) |
+
+|  ✅  |  ⚠️   |     🚧     |                     💭                      |
+| :--: | :---: | :--------: | :-----------------------------------------: |
+| Done | Buggy | Working on | Brief Idea <br> (Not likely be implemented) |
 
 ## Notes
+
 ### Markdown file structure
 
 This template aimed to build an automatically constructed wiki-liked react app. To achieve this, the routing was based on file structure within `./src` folder. By default, `react-route-dom` will create routes within `Notes` folder excluding `markdownCheatsheet.md` file.
@@ -74,15 +73,15 @@ This template aimed to build an automatically constructed wiki-liked react app. 
 ```md
 .
 ├── Notes
-│   ├── coding_notes
-│   │   ├── python_tutorials
-│   │   │   ├── python ch1
-│   │   │   │   └── ch1.md      <- become `<base url>/coding_notes/python_tutorials/python%20ch1/ch1`
-│   │   │   ├── python ch2
-│   │   │   │   └── ch2.md      <- become `<base url>/coding_notes/python_tutorials/python%20ch2/ch2`
-│   │   │   └── python.md       <- become `<base url>/coding_notes/python_tutorials/python`
-│   │   └── algorithm_c.md      <- become `<base url>/coding_notes/algorithm_c`
-│   └── markdownCheatsheet.md
+│ ├── coding_notes
+│ │ ├── python_tutorials
+│ │ │ ├── python ch1
+│ │ │ │ └── ch1.md <- become `<base url>/coding_notes/python_tutorials/python%20ch1/ch1`
+│ │ │ ├── python ch2
+│ │ │ │ └── ch2.md <- become `<base url>/coding_notes/python_tutorials/python%20ch2/ch2`
+│ │ │ └── python.md <- become `<base url>/coding_notes/python_tutorials/python`
+│ │ └── algorithm_c.md <- become `<base url>/coding_notes/algorithm_c`
+│ └── markdownCheatsheet.md
 ├── page
 ├── utils
 ...
@@ -90,10 +89,12 @@ This template aimed to build an automatically constructed wiki-liked react app. 
 
 The filtering behavior was defined in `App.jsx` file which can be customized.
 
-### CPP code block 
+### CPP code block
+
 The implementation of CPP worker (`src/utils/cpp_worker`) was adopted from [https://github.com/InfiniteXyy/playcode](https://github.com/InfiniteXyy/playcode).
 
 ### Markdown template
+
 In the latest version, markdown YAML heading support has been added. The deading will define the title, date and many attributes that will be rendered. The template of the Markdown files is as follows:
 
 ```md
@@ -107,15 +108,14 @@ abstract: "This is the abstract of this individual post."
 
 # Contents
 
-
 # title
 
 other texts
 other text
 ```
 
-
 ### Configure search contents
+
 Modify the following two parameters in `App.jsx` to filter out the files and directories for search.
 
 ```jsx
@@ -124,9 +124,10 @@ const excludedDirectories = ["Projects", "Website page"]; // Array containing ex
 ```
 
 ### Similar projects
-#### - [rdoc](https://github.com/jaywcjlove/rdoc)
-rdoc is a project aimed at producing blog pages from mardown which is similar to this project. However, rdoc stopped updating for 5 years. In contrast, this project is currently under maintenance and built based on the most recent packages (including React and Pyodide).
 
+#### - [rdoc](https://github.com/jaywcjlove/rdoc)
+
+rdoc is a project aimed at producing blog pages from mardown which is similar to this project. However, rdoc stopped updating for 5 years. In contrast, this project is currently under maintenance and built based on the most recent packages (including React and Pyodide).
 
 # Render results
 
@@ -226,8 +227,8 @@ rdoc is a project aimed at producing blog pages from mardown which is similar to
       <img src="./README_img/GFM%20and%20inline%20html.png" width="100%"/>
 </details>
 
-
 # Usage
+
 ## Build local server
 
 ```sh
@@ -236,8 +237,8 @@ cd react-markdown-template
 npm i
 npm run dev
 ```
-Access the demo via link [http://localhost:5173/test](http://localhost:5173/test)
 
+Access the demo via link [http://localhost:5173/test](http://localhost:5173/test)
 
 ## Deploy to Firebase
 
@@ -256,6 +257,12 @@ features, then Enter to confirm your choices. Hosting: Configure files for Fireb
 >? File dist/index.html already exists. Overwrite? No
 ```
 
+## Deploy to Vercel hobby plan
+
+1. Link your GitHub account to Vercel
+2. Chose your repository to deploy
+3. Configure build command and environment parameters
+4. Build and deploy!
 
 # Contributing
 
