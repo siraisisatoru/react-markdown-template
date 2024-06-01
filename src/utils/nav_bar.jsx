@@ -4,7 +4,7 @@ import { FaBars, FaFlaskVial } from "react-icons/fa6";
 import { FaGoogle, FaUserAlt, FaHome, FaRoute } from "react-icons/fa";
 import wikiLogo from "/img/logo.svg";
 import { FullFilesContext } from "../App";
-import SiteTreeRender from "./siteTreerender";
+import SiteTreeRender from "./siteTreeRender";
 import SearchBar from "./searchBar";
 
 const Nav_bar = () => {
